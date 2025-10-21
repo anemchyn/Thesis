@@ -6,37 +6,32 @@
 
 % Voor een voorstel in het Engels: voeg de documentclass-optie [english] toe.
 % Let op: kan enkel na toestemming van de bachelorproefcoördinator!
-\documentclass{hogent-article}
+\documentclass[english]{hogent-article}
 
 % Invoegen bibliografiebestand
 \addbibresource{voorstel.bib}
 
 % Informatie over de opleiding, het vak en soort opdracht
-\studyprogramme{Professionele bachelor toegepaste informatica}
-\course{Bachelorproef}
-\assignmenttype{Onderzoeksvoorstel}
+% \studyprogramme{Professionele bachelor toegepaste informatica}
+% \course{Bachelorproef}
+% \assignmenttype{Onderzoeksvoorstel}
 % Voor een voorstel in het Engels, haal de volgende 3 regels uit commentaar
-% \studyprogramme{Bachelor of applied information technology}
-% \course{Bachelor thesis}
-% \assignmenttype{Research proposal}
+\studyprogramme{Bachelor of applied information technology}
+\course{Bachelor thesis}
+\assignmenttype{Research proposal}
 
 \academicyear{2022-2023} % TODO: pas het academiejaar aan
 
 % TODO: Werktitel
-\title{Vul hier de voorgestelde titel van je onderzoek in}
+\title{A Proof of Concept System for Automated Price Comparison taking into account consumers' distance and amount of shops that can be visited in Ghent}
 
 % TODO: Studentnaam en emailadres invullen
-\author{Ernst Aarden}
-\email{ernst.aarden@student.hogent.be}
+\author{Aliaksandra Nemchynava}
+\email{aliaksandra.nemchynava@student.hogent.be}
 
-% TODO: Medestudent
-% Gaat het om een bachelorproef in samenwerking met een student in een andere
-% opleiding? Geef dan de naam en emailadres hier
-% \author{Yasmine Alaoui (naam opleiding)}
-% \email{yasmine.alaoui@student.hogent.be}
 
 % TODO: Geef de co-promotor op
-\supervisor[Co-promotor]{S. Beekman (Synalco, \href{mailto:sigrid.beekman@synalco.be}{sigrid.beekman@synalco.be})}
+\supervisor[Co-promotor]{J. Pots (Lighthouse, \href{mailto:jens.pots@lighthouse.be}{jens.pots@lighthouse.be})}
 
 % Binnen welke specialisatierichting uit 3TI situeert dit onderzoek zich?
 % Kies uit deze lijst:
@@ -50,12 +45,22 @@
 %   zelf
 %
 \specialisation{Mobile \& Enterprise development}
-\keywords{Scheme, World Wide Web, $\lambda$-calculus}
+\keywords{Web-Scraping, Data, Python, Django, Student-centered, Price Comparison, distance constraints, multi-store optimization}
 
 \begin{document}
 
+%  Hier schrijf je de samenvatting van je voorstel, als een doorlopende tekst van één paragraaf. Let op: dit is geen inleiding, maar een samenvattende tekst van heel je voorstel met inleiding (voorstelling, kaderen thema), probleemstelling en centrale onderzoeksvraag, onderzoeksdoelstelling (wat zie je als het concrete resultaat van je bachelorproef?), voorgestelde methodologie, verwachte resultaten en meerwaarde van dit onderzoek (wat heeft de doelgroep aan het resultaat?).
+  
 \begin{abstract}
-  Hier schrijf je de samenvatting van je voorstel, als een doorlopende tekst van één paragraaf. Let op: dit is geen inleiding, maar een samenvattende tekst van heel je voorstel met inleiding (voorstelling, kaderen thema), probleemstelling en centrale onderzoeksvraag, onderzoeksdoelstelling (wat zie je als het concrete resultaat van je bachelorproef?), voorgestelde methodologie, verwachte resultaten en meerwaarde van dit onderzoek (wat heeft de doelgroep aan het resultaat?).
+Rising food prices in Belgium have placed increasing pressure on student with limited budgets and mobility. Existing price comparison tools are not suitable for this target group, as they do not consider travel distances or the number of stores consumer is willing to visit. Furthermore some of the are paid.
+
+This research aims to design and develop a transparent and scalable system that automatically collects, matches, and compares supermarket prices in Belgium, focusing on students in Ghent. The main research question is: How can a transparent and scalable system be designed and developed to automatically collect, match, and compare supermarket prices in Belgium, while accounting for costumers' distance and amount of stores limitations?
+
+The prototype will be implemented in Python and Django, using web scraping to gather price data from supermarket websites. Users can input a shopping list and specify a maximum travel distance or number of stores, after which the system calculates the most cost-effective shopping plan.
+
+Evaluation will compare total costs of predefined student shopping carts between single store and optimized multi-store options. Expected results include measurable cost savings.
+
+This project contributes to more realistic and accessible price comparison systems by integrating technical efficiency with consumer-centered constrains, supporting students in making informed and affordable shopping choices. 
 \end{abstract}
 
 \tableofcontents
