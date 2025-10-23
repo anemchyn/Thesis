@@ -82,14 +82,35 @@ Je mag deze sectie nog verder onderverdelen in subsecties als dit de structuur v
 %
 %Probeer ook een tijdschatting te maken. Hoe lang zal je met elke fase van je onderzoek bezig zijn en wat zijn de concrete \emph{deliverables} in elke fase?
 
-This thesis focuses on the design and implementation of a functional prototype that automatically collects, matches, and compares supermarket prices in Belgium. The research process divided into three main phases: system design, data collection, data processing and product matching, system implementation and evaluation.
+This thesis focuses on the design and implementation of a functional prototype that automatically collects, matches, and compares supermarket prices in Belgium. The research process divided into five main phases: system design, data collection, data processing and product matching, system implementation and evaluation.
 
-In the design phase, the system's architecture and data flow were defined, including th selection of appropriate technologies such as Pyhton, Django and PostgreSQL. The implementation phase involves developing a web scraping module to collect price data from supermarket websites, a matching algorithm to link similar products across stores, and a comparison engine to calculate the most cost effective shopping options based in user constraints.
+\subsection{System Design}
 
-The evaluation phase tests the prototype using predefined shopping lists that represent typical student grocery baskets. The system's recommendations are compared against real single-store totals to measure potential savings.
+In this phase, the system's architecture and data flow were defined to insure modularity, scalability, and transparency. The architecture consists of data layer, which manages the storage of product and price information in relational database. The data base of choice is PostgreSQL. Next layer is processing layer, that handles web scarping, data cleaning, and product matching logic, implemented in Python. Third layer called presentation layer provides user interface through Django web application, allowing users to input shopping lists and define constraints such as travel distance and number of stores. The design choices were made to support future scalability and the integration of new supermarket and product data.
 
-This structured approach ensures that both the technical performance and practical value of the system are validated through measurable results.
+\subsection{Data Collection}
 
+The data collection phase focuses on gathering real-time product and price information from selected Ghent supermarkets that retail basic products.
+This achieved using web scraping techniques with Python libraries such as Requests, BeautifulSoup, and Selenium. Requests is used to send HTTP requests and retrieve the raw HTML content of web pages, giving an access publicly available data without a browser. BeautifulSoup is employed to parse and extract specific element from HTML content obtained through Requests. Selenium is used for scraping dynamic websites that load data through JavaScript after initial page request.
+
+Each scraper retrieves product names, prices that stores contain. All data is stored in structured tables within the PostgreSQL database, with additional metadata such as timestamp, data source to maintain transparency and traceability. Ethical guidelines are followed during scraping by accessing only publicly available data and respecting each store's terms of service.
+
+\subsection{Data Processing and Product Matching}
+
+Since supermarkets use different product names and formats, the collected data requires pre-processing before comparison. This phase has steps such as data cleaning, normalization and product matching. The cleaning includes removal of duplicates and unit normalization (e.g. price per kg, per liter). The matching part implements string similarity algorithms, such as Levenshtein distance and cosine similarity on TF-IDF vectors, to match equivalent products across stores. The filtering step stores the closest product matches to ensure accuracy in comparisons. The result of this phase is unified dataset where identical or similar products from different stores can be compared directly.
+
+\subsection{System implementation}
+
+The tool integrates all components into single Django-based web application. Data scraper runs scheduled scraping jobs and updates the database. Data Processor performs data cleaning and product matching. Comparison Engine calculates the most cost-effective store combinations based on user's constrains. User Interface allows users to input shopping lists and define parameters such as maximum distance and store count. The system us designed for local deployment during testing but can be extended for public use.
+
+\subsection{Evaluation}
+
+The evaluation phase assesses practical usefulness of the system.
+Predefined student shopping carts are created to simulate realistic purchase scenarios. Each cart is analyzed through two perspectives: Single-store shopping is purchasing all items from one supermarket and Optimized multi-store shopping uses the system's recommendation within defined distance and store constrains.
+
+The results are compared to determine potential cost savings. Additionally, the technical performance can be collected, such as time for calculating the plan.
+ 
+ 
 %---------- Verwachte resultaten ----------------------------------------------
 \section{Verwacht resultaat, conclusie}%
 \label{sec:verwachte_resultaten}
