@@ -7,6 +7,7 @@
 % Voor een voorstel in het Engels: voeg de documentclass-optie [english] toe.
 % Let op: kan enkel na toestemming van de bachelorproefcoördinator!
 \documentclass[english]{hogent-article}
+\usepackage{biblatex}
 
 % Invoegen bibliografiebestand
 \addbibresource{voorstel.bib}
@@ -20,7 +21,7 @@
 \course{Bachelor thesis}
 \assignmenttype{Research proposal}
 
-\academicyear{2022-2023} % TODO: pas het academiejaar aan
+\academicyear{2024-2025} % TODO: pas het academiejaar aan
 
 % TODO: Werktitel
 \title{A Proof of Concept System for Automated Price Comparison taking into account consumers' distance and amount of shops that can be visited in Ghent}
@@ -31,7 +32,7 @@
 
 
 % TODO: Geef de co-promotor op
-\supervisor[Co-promotor]{J. Pots (Lighthouse, \href{mailto:jens.pots@lighthouse.be}{jens.pots@lighthouse.be})}
+\supervisor[Co-promotor]{J. Pots (Lighthouse, \href{mailto:jens.pots@mylighthouse.com}{jens.pots@mylighthouse.com})}
 
 % Binnen welke specialisatierichting uit 3TI situeert dit onderzoek zich?
 % Kies uit deze lijst:
@@ -49,12 +50,11 @@
 
 \begin{document}
 
-%  Hier schrijf je de samenvatting van je voorstel, als een doorlopende tekst van één paragraaf. Let op: dit is geen inleiding, maar een samenvattende tekst van heel je voorstel met inleiding (voorstelling, kaderen thema), probleemstelling en centrale onderzoeksvraag, onderzoeksdoelstelling (wat zie je als het concrete resultaat van je bachelorproef?), voorgestelde methodologie, verwachte resultaten en meerwaarde van dit onderzoek (wat heeft de doelgroep aan het resultaat?).
   
 \begin{abstract}
-Rising food prices in Belgium have placed increasing pressure on student with limited budgets and mobility. Existing price comparison tools are not suitable for this target group, as they do not consider travel distances or the number of stores consumer is willing to visit. Furthermore some of the are paid.
+Rising food prices in Belgium have placed increasing pressure on student with limited budgets and mobility. Existing price comparison tools are not suitable for this target group, as they do not consider travel distances or the number of stores a consumer is willing to visit. Furthermore, some of them are paid.
 
-This research aims to design and develop a transparent and scalable system that automatically collects, matches, and compares supermarket prices in Belgium, focusing on students in Ghent. The main research question is: How can a transparent and scalable system be designed and developed to automatically collect, match, and compare supermarket prices in Belgium, while accounting for costumers' distance and amount of stores limitations?
+This research aims to design a system that helps customers make informed decisions about their groceries, focusing on students in Ghent. The main research question is: How can a transparent and scalable system be designed and developed to automatically collect, match, and compare supermarket prices in Belgium, while accounting for costumers' distance and amount of stores limitations?
 
 The prototype will be implemented in Python and Django, using web scraping to gather price data from supermarket websites. Users can input a shopping list and specify a maximum travel distance or number of stores, after which the system calculates the most cost-effective shopping plan.
 
@@ -68,7 +68,6 @@ This project contributes to more realistic and accessible price comparison syste
 % De hoofdtekst van het voorstel zit in een apart bestand, zodat het makkelijk
 % kan opgenomen worden in de bijlagen van de bachelorproef zelf.
 \input{voorstel-inhoud}
-
 \printbibliography[heading=bibintoc]
 
 \end{document}

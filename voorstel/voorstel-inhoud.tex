@@ -1,124 +1,93 @@
 %---------- Inleiding ---------------------------------------------------------
 
-% TODO: Is dit voorstel gebaseerd op een paper van Research Methods die je
-% vorig jaar hebt ingediend? Heb je daarbij eventueel samengewerkt met een
-% andere student?
-% Zo ja, haal dan de tekst hieronder uit commentaar en pas aan.
 
-%\paragraph{Opmerking}
+\section{Introduction}%
+\label{sec:Introduction}
 
-% Dit voorstel is gebaseerd op het onderzoeksvoorstel dat werd geschreven in het
-% kader van het vak Research Methods dat ik (vorig/dit) academiejaar heb
-% uitgewerkt (met medesturent VOORNAAM NAAM als mede-auteur).
-% 
 
-\section{Inleiding}%
-\label{sec:inleiding}
+In recent years, food prices in Belgium have risen significantly, placing increasing financial pressure on students and other budget-conscious consumers. While several supermarket price comparison tools exist, they generally focus on presenting the lowest prices without considering practical limitations, such as the distance a consumer is willing to travel or the number of stores they can reasonably visit. As a result, these tools provide theoretically optimal solutions that are difficult to implement in real-world scenarios, particularly for students with limited mobility and tight schedules.
+\par\vspace{0.8em}
 
-%Waarover zal je bachelorproef gaan? Introduceer het thema en zorg dat volgende zaken zeker duidelijk aanwezig zijn:
-%
-%\begin{itemize}
-%  \item kaderen thema
-%  \item de doelgroep
-%  \item de probleemstelling en (centrale) onderzoeksvraag
-%  \item de onderzoeksdoelstelling
-%\end{itemize}
-%
-%Denk er aan: een typische bachelorproef is \textit{toegepast onderzoek}, wat betekent dat je start vanuit een concrete probleemsituatie in bedrijfscontext, een \textbf{casus}. Het is belangrijk om je onderwerp goed af te bakenen: je gaat voor die \textit{ene specifieke probleemsituatie} op zoek naar een goede oplossing, op basis van de huidige kennis in het vakgebied.
-%
-%De doelgroep moet ook concreet en duidelijk zijn, dus geen algemene of vaag gedefinieerde groepen zoals \emph{bedrijven}, \emph{developers}, \emph{Vlamingen}, enz. Je richt je in elk geval op it-professionals, een bachelorproef is geen populariserende tekst. Eén specifiek bedrijf (die te maken hebben met een concrete probleemsituatie) is dus beter dan \emph{bedrijven} in het algemeen.
-%
-%Formuleer duidelijk de onderzoeksvraag! De begeleiders lezen nog steeds te veel voorstellen waarin we geen onderzoeksvraag terugvinden.
-%
-%Schrijf ook iets over de doelstelling. Wat zie je als het concrete eindresultaat van je onderzoek, naast de uitgeschreven scriptie? Is het een proof-of-concept, een rapport met aanbevelingen, \ldots Met welk eindresultaat kan je je bachelorproef als een succes beschouwen?
+Students frequently face challenges in identifying the most cost-effective shopping options. Limited budgets, combined with time and travel constraints, complicate efficient price comparisons across different supermarkets. Existing tools rarely incorporate these constraints, creating a gap between available price information and actionable, user-centered insights. This research addresses this gap by focusing on the development of a system tailored to the needs of students in Ghent.
+\par\vspace{0.8em}
 
-In recent years, food prices in Belgium have risen significantly, placing increasing financial pressure on students and other budget-conscious consumers. While several supermarket price comparison tools exist, they generally focus on presenting the lowest prices without considering practical limitations, such as the distance a consumer is willing to travel or the number of stores they can reasonably visit. As a result, these tools often provide theoretically optimal solutions that are difficult to implement in real-world scenarios, particularly for students with limited mobility and tight schedules.
+The main objective and the research question of this study is the design and development of a transparent and scalable system capable of automatically collecting, matching, and comparing supermarket prices in Belgium, while taking into account consumers' distance and limiting the amount of shops visited. 
+\par\vspace{0.8em}
 
-Students frequently face challenges in identifying the most cost-effective shopping options. Limited budgets, combined with time and travel constraints, make it difficult to compare prices across multiple supermarkets efficiently. Existing tools rarely incorporate these constrains, creating a gap between available price information and actionable, user-centered insights. This research addresses this gap by focusing on the development of a system tailored to the needs of students in Gent.
+The result of this research is a prototype, implemented using Python and Django, that collects price data through web scraping from Belgian supermarket websites. Users of this prototype will be able to input a general shopping list and specify a maximum travel distance or a limit on the number of stores. The system will then calculate the most cost-effective combination of stores based on these constraints. The system will be evaluated using a predefined ''student shopping cart'' to compare the total cost of shopping at a single store versus the optimized multi-store recommendation generated by the system.
+\par\vspace{0.8em}
 
-The main objective of this study is to design and develop a transparent and scalable system capable of automatically collecting, matching, and comparing supermarket prices in Belgium, while taking into account consumers' distance and amount of shops limitation. The central research question guiding this is: How can a transparent and scalable system be designed and developed to automatically collect, match, and compare supermarket prices in Belgium, while accounting for costumers' distance and amount of stores limitations?
-
-The proposed prototype, implemented using Python and Django, will collect price data through web scraping from Belgian supermarket websites. Users will be able to input a general shopping list and specify a maximum travel distance or a limit on the number of stores. The system will then calculate the most cost-effective combination of stored based on these constrains. Evaluation will involve predefined ''student shopping cart'' to compare the total cost of shopping at a single store versus the optimized multi-store option generated by the system.
-
-This research contributes to the development od realistic and accessible supermarket price comparison tools that integrate technical efficiency with consumer-centered constraints. By focusing on students' needs, the system aims to enhance price transparency and support informed, budget-conscious shopping decisions, offering practical insights that could inform future consumer-oriented applications. 
+This research contributes to the development of a realistic and accessible supermarket price comparison tools that integrate technical efficiency with consumer-centered constraints. By focusing on students' needs, the system aims to enhance price transparency and support informed, budget-conscious shopping decisions, offering practical insights that could inform future consumer-oriented applications. 
+\par\vspace{0.8em}
 
 %---------- Stand van zaken ---------------------------------------------------
 
-\section{Literatuurstudie}%
-\label{sec:literatuurstudie}
+\section{Literature Review}%
+\label{sec:literature-review}
 
-Hier beschrijf je de \emph{state-of-the-art} rondom je gekozen onderzoeksdomein, d.w.z.\ een inleidende, doorlopende tekst over het onderzoeksdomein van je bachelorproef. Je steunt daarbij heel sterk op de professionele \emph{vakliteratuur}, en niet zozeer op populariserende teksten voor een breed publiek. Wat is de huidige stand van zaken in dit domein, en wat zijn nog eventuele open vragen (die misschien de aanleiding waren tot je onderzoeksvraag!)?
 
-Je mag de titel van deze sectie ook aanpassen (literatuurstudie, stand van zaken, enz.). Zijn er al gelijkaardige onderzoeken gevoerd? Wat concluderen ze? Wat is het verschil met jouw onderzoek?
+\subsection{Context: food prices and student pressure}
 
-Verwijs bij elke introductie van een term of bewering over het domein naar de vakliteratuur, bijvoorbeeld~\autocite{Hykes2013}! Denk zeker goed na welke werken je refereert en waarom.
+Recent Belgian indicators show persistent price pressure on food. According to Statbel's CPI' report, the health-index inflation remains elevated throughout 2024-2025, with core inflation above 2\% \autocite{2025a-s, 2025b-s}. Independent tracking by Testaankoop/Testachats likewise reports supermarket specific inflation around 4\% year-over-year in 2025 \autocite{2025a-t,2025b-t}. 
+% Broader macro assessments \autocite{OCED} frame the consumer impact and index methodology changes under consideration. 
+Together, these sources substantiate the problem relevance for the price-sensitive groups such as students.
 
-Draag zorg voor correcte literatuurverwijzingen! Een bronvermelding hoort thuis \emph{binnen} de zin waar je je op die bron baseert, dus niet er buiten! Maak meteen een verwijzing als je gebruik maakt van een bron. Doe dit dus \emph{niet} aan het einde van een lange paragraaf. Baseer nooit teveel aansluitende tekst op eenzelfde bron.
+\subsection{Supermarket data: web scraping as a practical pipeline}
 
-Als je informatie over bronnen verzamelt in JabRef, zorg er dan voor dat alle nodige info aanwezig is om de bron terug te vinden (zoals uitvoerig besproken in de lessen Research Methods).
+Because Belgian retailers rarely expose APIs for product/price feeds to the public, web scraping is a pragmatic way of obtaining structured price data from public pages. Technically, HTTP clients (e.g., Requests) fetch HTML, parsers (e.g. BeautifulSoup) extract fields, and browser automation (e.g. Selenium) renders JavaScript-dependent content, an approach widely documented in research and practice \autocite{Logos2023, Brown2024}. Scraping has been adopted in adjacent Belgian retail domains (real-estate, FMCG) to assemble large, timely datasets for analysis, such as UNECE case on Belgian's CPI use of web data; \autocite{Kerek2020}.
 
-% Voor literatuurverwijzingen zijn er twee belangrijke commando's:
-% \autocite{KEY} => (Auteur, jaartal) Gebruik dit als de naam van de auteur
-%   geen onderdeel is van de zin.
-% \textcite{KEY} => Auteur (jaartal)  Gebruik dit als de auteursnaam wel een
-%   functie heeft in de zin (bv. ``Uit onderzoek door Doll & Hill (1954) bleek
-%   ...'')
+\subsection{Legal and Ethical considerations for scraping}
 
-Je mag deze sectie nog verder onderverdelen in subsecties als dit de structuur van de tekst kan verduidelijken.
+Scraping must respect terms of service, IP, and data-protection constraints. Comparative analyses of website ToS show many platforms explicitly regulate ''robots/scrapers'', requiring researchers to weigh necessity, proportionality, and compliance mechanisms \autocite{Fiesler2020}. Recent overviews propose concrete checklists on legality, ethics, and institutional review, for example, documenting purpose, rate limits, storage, data sharing, and honoring robots.txt \autocite{Logos2023, Brown2024}. These frameworks guide the governance you will include in your prototype (e.g., timestamps, source attribution, throttling).
+
+\subsection{Product matching across retailers}
+
+Price comparison requires aligning ''the same'' item across stores despite naming/pack size differences. Literature support a two-stage approach: 1. exact identifiers (e.g., EAN/GTIN) where available; 2. approximate/semantic matching using fuzzy similarity  (Levenshtein/TF-IDF/cosine) or ML embeddings for near-dublicate detection \autocite{Kerek2020, Ning2022}. For text extracted from receipts or noisy pages, OCR+fuzzy pipelines evaluated with precision/recall/F1 provide a practical baseline \autocite{Rahmatsyah2025}. These methods map directly to your ''general-name shopping list -> store SKUs' requirement.
+
+\subsection{Decision support, trust, and constraints in grocery apps}
+
+Beyond raw price, adoption depends on trust (source transparency, update timestamps) and real-life constrains (distance, number of stores). Research in online grocery contexts highlights that transparency and explainability improve perceived reliability and intention to use \autocite{Chakraborty2024}. Recommender-style approaches in grocery show multi-criteria trade-offs (e.g. product/pack/health), which you can adapt to incorporate distance and store-count as constraints in the optimization objective \autocite{Hafez2021}. The literature supports a pipeline combining complaint scraping, reproducible matching (EAN-first + fuzzy/ML fallback), and transparent interfaces that expose source and recency, evaluated on precision/recall for matches and realistic student-centric constraints (distance, max stores) for cost outcomes. 
+
 
 %---------- Methodologie ------------------------------------------------------
-\section{Methodologie}%
-\label{sec:methodologie}
+\section{Methodology}%
+\label{sec:methodology}
 
-%Hier beschrijf je hoe je van plan bent het onderzoek te voeren. Welke onderzoekstechniek ga je toepassen om elk van je onderzoeksvragen te beantwoorden? Gebruik je hiervoor literatuurstudie, interviews met belanghebbenden (bv.~voor requirements-analyse), experimenten, simulaties, vergelijkende studie, risico-analyse, PoC, \ldots?
-%
-%Valt je onderwerp onder één van de typische soorten bachelorproeven die besproken zijn in de lessen Research Methods (bv.\ vergelijkende studie of risico-analyse)? Zorg er dan ook voor dat we duidelijk de verschillende stappen terug vinden die we verwachten in dit soort onderzoek!
-%
-%Vermijd onderzoekstechnieken die geen objectieve, meetbare resultaten kunnen opleveren. Enquêtes, bijvoorbeeld, zijn voor een bachelorproef informatica meestal \textbf{niet geschikt}. De antwoorden zijn eerder meningen dan feiten en in de praktijk blijkt het ook bijzonder moeilijk om voldoende respondenten te vinden. Studenten die een enquête willen voeren, hebben meestal ook geen goede definitie van de populatie, waardoor ook niet kan aangetoond worden dat eventuele resultaten representatief zijn.
-%
-%Uit dit onderdeel moet duidelijk naar voor komen dat je bachelorproef ook technisch voldoen\-de diepgang zal bevatten. Het zou niet kloppen als een bachelorproef informatica ook door bv.\ een student marketing zou kunnen uitgevoerd worden.
-%
-%Je beschrijft ook al welke tools (hardware, software, diensten, \ldots) je denkt hiervoor te gebruiken of te ontwikkelen.
-%
-%Probeer ook een tijdschatting te maken. Hoe lang zal je met elke fase van je onderzoek bezig zijn en wat zijn de concrete \emph{deliverables} in elke fase?
 
-This thesis focuses on the design and implementation of a functional prototype that automatically collects, matches, and compares supermarket prices in Belgium. The research process divided into five main phases: system design, data collection, data processing and product matching, system implementation and evaluation.
+This thesis focuses on the design and implementation of a functional prototype that automatically collects, matches, and compares supermarket prices in Belgium. The research process is divided into five main phases: system design, data collection, data processing and product matching, system implementation and evaluation.\par\vspace{0.8em}
 
 \subsection{System Design}
 
-In this phase, the system's architecture and data flow were defined to insure modularity, scalability, and transparency. The architecture consists of data layer, which manages the storage of product and price information in relational database. The data base of choice is PostgreSQL. Next layer is processing layer, that handles web scarping, data cleaning, and product matching logic, implemented in Python. Third layer called presentation layer provides user interface through Django web application, allowing users to input shopping lists and define constraints such as travel distance and number of stores. The design choices were made to support future scalability and the integration of new supermarket and product data.
+In this phase, the system's architecture and data flow were defined to ensure modularity, scalability, and transparency. The architecture consists of three distinct layers. The first layer is called the data layer and manages the storage of product and price information in a PostgreSQL relational database. The second layer is the processing layer and handles web scraping, data cleaning, and product matching logic, implemented in Python. The third layer is the presentation layer, which provides a user interface through a Django web application, allowing users to input shopping lists and define constraints such as travel distance and the number of stores. These design choices were made to support future scalability and the integration of new supermarket and product data.
+\par\vspace{0.8em}
+
 
 \subsection{Data Collection}
 
-The data collection phase focuses on gathering real-time product and price information from selected Ghent supermarkets that retail basic products.
-This achieved using web scraping techniques with Python libraries such as Requests, BeautifulSoup, and Selenium. Requests is used to send HTTP requests and retrieve the raw HTML content of web pages, giving an access publicly available data without a browser. BeautifulSoup is employed to parse and extract specific element from HTML content obtained through Requests. Selenium is used for scraping dynamic websites that load data through JavaScript after initial page request.
+The data collection phase focuses on gathering daily product and price information from selected Ghent supermarkets.
+This is achieved using web scraping techniques, using Python libraries such as Requests, BeautifulSoup, and Selenium. Requests is used to send HTTP requests and retrieve the raw HTML content of web pages, giving access to publicly available information without a browser. BeautifulSoup is employed to parse and extract specific elements from the HTML content obtained through Requests. Lastly, Selenium is used for scraping dynamic websites that load data through JavaScript after initial page request.
+\par\vspace{0.8em}
 
-Each scraper retrieves product names, prices that stores contain. All data is stored in structured tables within the PostgreSQL database, with additional metadata such as timestamp, data source to maintain transparency and traceability. Ethical guidelines are followed during scraping by accessing only publicly available data and respecting each store's terms of service.
+Each scraper retrieves product names and prices. All data is stored in structured tables within the PostgreSQL database, with additional metadata such as timestamps, data sources to maintain transparency and traceability. 
 
 \subsection{Data Processing and Product Matching}
 
-Since supermarkets use different product names and formats, the collected data requires pre-processing before comparison. This phase has steps such as data cleaning, normalization and product matching. The cleaning includes removal of duplicates and unit normalization (e.g. price per kg, per liter). The matching part implements string similarity algorithms, such as Levenshtein distance and cosine similarity on TF-IDF vectors, to match equivalent products across stores. The filtering step stores the closest product matches to ensure accuracy in comparisons. The result of this phase is unified dataset where identical or similar products from different stores can be compared directly.
+Since supermarkets use different product names and formats, the collected data requires pre-processing before comparison. This phase happens in a number of steps: data cleaning, normalization and product matching. The data cleaning  step includes the removal of duplicates and unit normalization (e.g. price per kg or per liter). The matching step implements string similarity algorithms, such as Levenshtein distance and cosine similarity on TF-IDF vectors, to match equivalent products across stores. The filtering step stores the closest product matches to ensure accuracy in comparisons. The result of this phase is a unified dataset where identical or similar products from different stores can be compared directly.
 
 \subsection{System implementation}
 
-The tool integrates all components into single Django-based web application. Data scraper runs scheduled scraping jobs and updates the database. Data Processor performs data cleaning and product matching. Comparison Engine calculates the most cost-effective store combinations based on user's constrains. User Interface allows users to input shopping lists and define parameters such as maximum distance and store count. The system us designed for local deployment during testing but can be extended for public use.
+The tool integrates following components into a single Django-based web application. Data Scraper runs scheduled scraping jobs and updates the database. Data Processor performs data cleaning and product matching. Comparison Engine calculates the most cost-effective store combinations based on user's constraints. User Interface allows users to input shopping lists and define parameters such as maximum distance and store count. The system is designed for local deployment during testing but can be extended for public use.
 
 \subsection{Evaluation}
 
-The evaluation phase assesses practical usefulness of the system.
-Predefined student shopping carts are created to simulate realistic purchase scenarios. Each cart is analyzed through two perspectives: Single-store shopping is purchasing all items from one supermarket and Optimized multi-store shopping uses the system's recommendation within defined distance and store constrains.
+The evaluation phase assesses the practical usefulness of the system, using predefined student shopping carts that simulate realistic purchase scenarios. Each cart is analyzed through two perspectives: Single-store shopping (purchasing all items from one supermarket) and Optimized multi-store shopping (purchasing all items using the system's recommendation).
 
 The results are compared to determine potential cost savings. Additionally, the technical performance can be collected, such as time for calculating the plan.
  
  
 %---------- Verwachte resultaten ----------------------------------------------
-\section{Verwacht resultaat, conclusie}%
-\label{sec:verwachte_resultaten}
+\section{Expected results}%
+\label{sec:expected-results}
 
-%Hier beschrijf je welke resultaten je verwacht. Als je metingen en simulaties uitvoert, kan je hier al mock-ups maken van de grafieken samen met de verwachte conclusies. Benoem zeker al je assen en de onderdelen van de grafiek die je gaat gebruiken. Dit zorgt ervoor dat je concreet weet welk soort data je moet verzamelen en hoe je die moet meten.
-%
-%Wat heeft de doelgroep van je onderzoek aan het resultaat? Op welke manier zorgt jouw bachelorproef voor een meerwaarde?
-%
-%Hier beschrijf je wat je verwacht uit je onderzoek, met de motivatie waarom. Het is \textbf{niet} erg indien uit je onderzoek andere resultaten en conclusies vloeien dan dat je hier beschrijft: het is dan juist interessant om te onderzoeken waarom jouw hypothesen niet overeenkomen met de resultaten.
 
-The main expected outcome of this research is a functional prototype that demonstrates the feasibility of the system, that collects, matches and compares product prices. That includes a working scraping module that collects price and data from multiple stores' websites. In addition, this tool is expected to correctly match equivalent items across different shops with a high level accuracy. After evaluation using predefined student carts prototype is expected to demonstrate measurable price difference when compared to a shopping in a single supermarket. These results should confirm added value of the system in terms of affordability.  
+The main expected outcome of this research is a functional prototype that demonstrates the feasibility of a system for collecting, matching and comparing product prices. This includes a working scraping module that collects price and data from multiple stores' websites, and a matching module for corresponding items across different shops with a high level of accuracy. After evaluation using predefined student carts, the prototype is expected to demonstrate measurable price difference when compared to shopping in a single supermarket. These results should confirm added value of the system in terms of affordability.
