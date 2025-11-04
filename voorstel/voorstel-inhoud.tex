@@ -6,28 +6,27 @@
 
 
 In recent years, food prices in Belgium have risen significantly, placing increasing financial pressure on students and other budget-conscious consumers. While several supermarket price comparison tools exist, they generally focus on presenting the lowest prices without considering practical limitations, such as the distance a consumer is willing to travel or the number of stores they can reasonably visit. As a result, these tools provide theoretically optimal solutions that are difficult to implement in real-world scenarios, particularly for students with limited mobility and tight schedules.
-\par\vspace{0.8em}
 
 Students frequently face challenges in identifying the most cost-effective shopping options. Limited budgets, combined with time and travel constraints, complicate efficient price comparisons across different supermarkets. Existing tools rarely incorporate these constraints, creating a gap between available price information and actionable, user-centered insights. This research addresses this gap by focusing on the development of a system tailored to the needs of students in Ghent.
 \par\vspace{0.8em}
 
-The main objective and the research question of this study is the design and development of a transparent and scalable system capable of automatically collecting, matching, and comparing supermarket prices in Belgium, while taking into account consumers' distance and limiting the\newline amount of shops visited. To answer the main question and guide the research the following sub-questions are used, they are split in two domains:
+To develop such a system, the following main research question needs to be answered: How to design and develop a transparent and scalable system, capable of automatically collecting, matching, and comparing supermarket prices in Ghent, that takes into account consumers' distance and limits the amount of shops visited? 
 
-\textbf{Problem-domain:}
+To support answering this question and guide the research, an improved understanding of the target audience and the problem context is required. More specifically:
 \begin{itemize}
     \item What factors currently influence students' consumption habits in Belgium?
-    \item What kind of tools for price comparison are available in Belgium, specifically for student?
-    \item What technical and practical challenges there are for collecting price data from Belgian supermarkets?
+    \item What kind of tools for price comparisons are available in Belgium, and what shortcomings do they have for students?
+    \item What technical and practical challenges are there for collecting price data from Belgian supermarkets?
 \end{itemize}
 
-\textbf{Solution-domain:}
+Furthermore, research into programmatic and architectural details of the candidate solution, and its success factors, needs to be conducted. More precisely:
+
 \begin{itemize}
     \item How can supermarket price data be automatically collected and structured?
-    \item What approach can be used to match general product names to achieve accurate comparisons?
-    \item How can system calculate and recommend the most cost-effective combinations of stores within a user-defined distance and store limit?
+    \item What approaches can be used to match general product names to achieve accurate comparisons?
+    \item How can the system calculate and recommend the most cost-effective combinations of stores within a user-defined distance and a store limit?
     \item How can the system architecture be designed to support scalability and transparency of the data?
-    \item How can the success of the tool be measured?
-    \
+    \item What criteria must the prototype meet in order to be considered a valid proof-of-concept? 
 \end{itemize}
 \par\vspace{0.8em}
 
@@ -89,7 +88,7 @@ In summary, the literature supports a pipeline combining web scraping, reproduci
 \label{sec:methodology}
 
 
-This thesis focuses on the design and implementation of a functional prototype that automatically collects, matches, and compares supermarket prices in Belgium. The research process is divided into five main phases: system design, data collection, data processing and product matching, system implementation and evaluation.\par\vspace{0.8em}
+This thesis focuses on the design and implementation of a functional prototype that automatically collects, matches, and compares supermarket prices in Ghent. The research process is divided into five main phases: system design, data collection, data processing and product matching, system implementation and evaluation.\par\vspace{0.8em}
 
 \subsection{System Design}
 
@@ -114,9 +113,9 @@ The tool integrates following components into a single Django-based web applicat
 
 \subsection{Evaluation}
 
-The evaluation phase assesses the practical usefulness of the system, using predefined student shopping carts that simulate realistic purchase scenarios. Each cart is analyzed through two perspectives: Single-store shopping (purchasing all items from one supermarket) and Optimized multi-store shopping (purchasing all items using the system's recommendation).
+The evaluation phase assesses the practical usefulness of the system, using predefined student shopping carts that simulate realistic purchase scenarios. Each cart is analyzed from two perspectives: Single-store shopping (purchasing all items in one supermarket) and Optimized multi-store shopping (purchasing all items using the system's recommendation).
 
-The results are compared to determine potential cost savings. Additionally, the technical performance can be collected, such as time for calculating the plan.
+Based on these results, the prototype can be considered a successful proof-of-concept if it is capable of producing cost reductions for Ghent students with various criteria, while maintaining transparency in its decision process. 
  
  
 %---------- Verwachte resultaten ----------------------------------------------
