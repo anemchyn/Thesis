@@ -26,5 +26,31 @@
 %% Maak voor elke fase (behalve het literatuuronderzoek) een NIEUW HOOFDSTUK aan
 %% en geef het een gepaste titel.
 
-\lipsum[21-25]
+Dit proefschrift richt zich op het ontwerp en de implementatie van een functioneel prototype dat automatisch supermarktprijzen in Gent verzamelt, vergelijkt en matcht. De methodologie bestaat uit vier opeenvolgende fasen: systeemontwerp, dataverzameling, dataverwerking en evaluatie. \par\vspace{0.8em}
+
+\section{Proof of concept}
+\subsection{Systeemontwerp}
+
+In de eerste fase werden de architectuur en datastroom van het systeem gedefinieerd met als doel modulariteit, schaalbaarheid en transparantie te garanderen.Het systeem is opgebouwd als een modulaire, event-gedreven pipeline bestaande uit vier lagen. De eerste laag is datacaptatielaag, deze laag beheert de opslag van producteninformatie. De tweede laag is verrantwoordelijk om ruwe datasets publiceren in Kafka en het is transportlaag. De derde laag is de verwerkingslaag , daar een Kafka-consumer verwerkt, normaliseert en matcht producten, en slaat de resultaten op in een PostgreSQL-database. De vierde laag is de presentatielaag, een Django-gebaseerde webinterface maakt het mogelijk boodschappenlijsten en beperkingen in te voeren en berekent de goedkoopste winkelcombinatie.
+\subsection{Dataverzameling}
+
+De dataverzamelingsfase richt zich op het verzamelen van dagelijkse product- en prijsinformatie van geselecteerde Gentse supermarkten. Dit wordt uitgevoerd met behulp van webscrapingtechnieken, geïmplementeerd via Scrapy-spiders. Scrapy wordt gebruikt om HTTP-verzoeken te versturen en de onbewerkte HTML-inhoud van webpagina’s op te halen, waardoor toegang wordt verkregen tot publiek beschikbare informatie zonder een volledige browseromgeving.
+
+De spiders extraheren relevante gegevens zoals productnamen, verpakkingsformaten, prijzen en merklabels door specifieke HTML-elementen te parsen. Voor websites die gebruikmaken van JavaScript-gedreven dynamische inhoud wordt een browser-emulator ingezet, zodat pagina’s eerst volledig kunnen laden voordat ze verwerkt worden.
+
+In plaats van de gegevens onmiddellijk op te slaan of te verwerken, worden alle gescrapete productrecords als ruwe JSON-objecten gepubliceerd naar een Kafka-topic. Hierdoor wordt de dataverzameling losgekoppeld van de daaropvolgende verwerkingsstappen, wat de schaalbaarheid en fouttolerantie van het systeem verhoogt. Naast de productinformatie zelf worden ook metadata zoals timestamp en bronwinkel meegestuurd, waardoor transparantie en reproduceerbaarheid worden gegarandeerd.
+
+\subsection{Dataverwerking en productmatching}
+
+De dataverwerking gebeurt asynchroon in een aparte module die berichten uit Kafka consumeert en omdat supermarkten verschillende productnamen en -formaten gebruiken, moeten de verzamelde gegevens worden voorbewerkt voordat ze kunnen worden vergeleken. Deze fase bestaat uit een aantal stappen: data cleaning, normalisatie en productmatching. De dataopschoningsstap omvat het verwijderen van duplicaten en eenheidsnormalisatie (bijv. prijs per kg of per liter). De matchingstap implementeert string-similariteitsalgoritmen, zoals Levehnstein-afstand en cosinus-similariteit op TF-IDF-vectoren, om gelijkwaardige producten in verschillende winkels te matchen. De filterstap slaat de dichtstbijzijnde productmatches op om nauwkeurigheid in vergelijkingen te garanderen. Het resultaat van deze fase is een uniforme dataset waarin identieke of vergelijkbare producten uit verschillende winkels direct kunnen worden vergeleken.
+
+\subsection{Interfaceontwikkeling en integratie}
+
+De tool cobineert alle componenten in één Django-gebaseerde webapplicatie. Daarnast wordt er vergelijking modeule binnen deze applicatie uitgewerkt die berekent voor een ingevoerd boodschappenlijstje de kostprijs als alle producten in één winkel worden gekocht en de minimale totale prijs bij optimale winkelcombinatie, rekening houdend met maximale reisafstand en maximaal aantal winkels.
+
+\subsection{Evaluatie}
+
+De evaluatiefase beoordeelt de praktische bruikbaarheid van het systeem, met behulp van vooraf gedefinieerde winkelwagentjes voor studenten die realistische aankoopscenario's simuleren. Elk winkelwagentje wordt vanuit twee perspectieven geanalyseerd: winkelen in één winkel (alle artikelen in één supermarkt kopen) en geoptimaliseerd winkelen in meerdere winkels (alle artikelen kopen op basis van de aanbevelingen van het systeem).
+
+Op basis van deze resultaten kan het prototype worden beschouwd als een succesvol proof-of-concept als het in staat is om kostenbesparingen te realiseren voor Gentse studenten met verschillende criteria, terwijl de transparantie in het besluitvormingsproces behouden blijft.
 
