@@ -5,18 +5,18 @@
 \chapter{\IfLanguageName{dutch}{Inleiding}{Introduction}}%
 \label{ch:inleiding}
 
-De voedselprijzen in België zijn de afgelopen jaren aanzienlijk gestegen, wat een toenemende financiële druk legt op studenten en andere budgetbewuste consumenten. Hoewel er verschillende prijsvergelijkingstools voor supermarkten bestaan, richten deze zich over het algemeen op het presenteren van de laagste prijzen, zonder rekening te houden met praktische beperkingen, zoals de afstand die een consument bereid is af te leggen of het aantal winkels dat hij of zij redelijkerwijs kan bezoeken. Hierdoor bieden deze tools theoretisch optimale oplossingen die in de praktijk moeilijk te implementeren zijn, met name voor studenten met beperkte mobiliteit en een strak schema.
+De voedselprijzen in België zijn de afgelopen jaren aanzienlijk gestegen, wat een groeiende financiële druk legt op studenten en andere budgetbewuste consumenten. Hoewel er verschillende prijsvergelijkingstools voor supermarkten bestaan, richten deze zich over het algemeen op het presenteren van de laagste prijzen, zonder rekening te houden met praktische beperkingen, zoals de afstand die een consument bereid is af te leggen of het aantal winkels dat hij of zij redelijkerwijs kan bezoeken. Hierdoor bieden deze tools theoretisch optimale oplossingen die in de praktijk moeilijk te implementeren zijn, met name voor studenten met beperkte mobiliteit en een strak schema.
 
 
 \section{\IfLanguageName{dutch}{Probleemstelling}{Problem Statement}}%
 \label{sec:probleemstelling}
 
-Studenten ondervinden vaak uitdagingen bij het vinden van de meest kosteneffectieve winkelopties. Beperkte budgetten, gecombineerd met tijd- en reisbeperkingen, bemoeilijken efficiënte prijsvergelijkingen tussen verschillende supermarkten. Bestaande tools houden zelden rekening met deze beperkingen, waardoor er een kloof ontstaat tussen beschikbare prijsinformatie en bruikbare, gebruikersgerichte inzichten. Dit onderzoek pakt deze kloof aan door zich te richten op de ontwikkeling van een systeem dat is afgestemd op de behoeften van studenten met gelimmeteerde budget in Gent.
+Studenten ondervinden vaak uitdagingen bij het vinden van de meest kostenefficiënte winkelopties. Beperkte budgetten, gecombineerd met tijd- en reisbeperkingen, bemoeilijken efficiënte prijsvergelijkingen tussen verschillende supermarkten. Bestaande tools houden zelden rekening met deze beperkingen, waardoor er een kloof ontstaat tussen beschikbare prijsinformatie en bruikbare, gebruikersgerichte inzichten. Dit onderzoek pakt deze kloof aan door zich te richten op de ontwikkeling van een systeem dat is afgestemd op de behoeften van studenten met een beperkt budget in Gent.
 
 \section{\IfLanguageName{dutch}{Onderzoeksvraag}{Research question}}%
 \label{sec:onderzoeksvraag}
 
-Om een ​​dergelijk systeem te ontwikkelen, moet de volgende hoofdonderzoeksvraag worden beantwoord: Hoe ontwerp en ontwikkel je een transparant en schaalbaar systeem dat automatisch supermarktprijzen in Gent kan verzamelen, matchen en vergelijken, rekening houdend met de afstand van consumenten en het aantal winkelbezoeken beperkt?
+Om een ​​dergelijk systeem te ontwikkelen, moet de volgende hoofdonderzoeksvraag worden beantwoord: Hoe ontwerp en ontwikkel je een transparant en schaalbaar systeem dat automatisch supermarktprijzen in Gent kan verzamelen, matchen en vergelijken, rekening houdend met de afstand tot de consument en een door de gebruiker opgegeven limiet voor het aantal te bezoeken winkels?
 
 \section{Deelvragen}
 \label{sec:deelvragen}
@@ -30,7 +30,7 @@ Verder moet onderzoek worden gedaan naar de programmatische en architecturale de
     \item Aan welke criteria moet het prototype voldoen om als een geldig proof-of-concept te worden beschouwd?
 \end{itemize}
 
-Om deze vraag te beantwoorden en het onderzoek te sturen, is een beter begrip van de doelgroep en de probleemcontext vereist. Meer specifiek:
+Om deze vragen te beantwoorden en het onderzoek te sturen, is inzicht vereist in de doelgroep en de probleemcontext. Meer specifiek:
 \begin{itemize}
     \item Welke factoren beïnvloeden momenteel de consumptiegewoonten van studenten in België?
     \item Welke tools voor prijsvergelijking zijn er in België beschikbaar en welke tekortkomingen hebben ze voor studenten?
@@ -40,7 +40,7 @@ Om deze vraag te beantwoorden en het onderzoek te sturen, is een beter begrip va
 \section{\IfLanguageName{dutch}{Onderzoeksdoelstelling}{Research objective}}%
 \label{sec:onderzoeksdoelstelling}
 
-Het resultaat van dit onderzoek is een prototype, geïmplementeerd met Python en Django, dat prijsgegevens verzamelt via webscraping van Belgische supermarktwebsites. Gebruikers van dit prototype kunnen een algemene boodschappenlijst invoeren en een maximale reisafstand of een limiet voor het aantal winkels opgeven. Het systeem berekent vervolgens de meest kosteneffectieve combinatie van winkels op basis van deze beperkingen. Het systeem wordt geëvalueerd met behulp van een vooraf gedefinieerde 'studentenwinkelwagen' om de totale kosten van een aankoop in één winkel te vergelijken met de geoptimaliseerde aanbeveling voor meerdere winkels die door het systeem wordt gegenereerd.
+Het resultaat van dit onderzoek is een prototype, geïmplementeerd met Python en Django, dat prijsgegevens verzamelt via webscraping van Belgische supermarktwebsites. Gebruikers van dit prototype kunnen een algemene boodschappenlijst invoeren en een maximale reisafstand of een limiet voor het aantal winkels opgeven. Het systeem berekent vervolgens de meest kostenefficiënte combinatie van winkels op basis van deze beperkingen. Het systeem wordt geëvalueerd met behulp van een vooraf gedefinieerde standaardboodschappenlijst voor studenten om de totale kosten van een aankoop in één winkel te vergelijken met de door het systeem gegenereerde, geoptimaliseerde aanbeveling voor meerdere winkels.
 
 Dit onderzoek draagt ​​bij aan de ontwikkeling van realistische en toegankelijke tools voor supermarktprijsvergelijking die technische efficiëntie combineren met consumentgerichte beperkingen. Door zich te richten op de behoeften van studenten, beoogt het systeem de prijstransparantie te vergroten en weloverwogen, budgetbewuste winkelbeslissingen te ondersteunen. Het biedt praktische inzichten die toekomstige consumentgerichte toepassingen kunnen inspireren.
 

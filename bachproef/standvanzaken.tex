@@ -6,27 +6,27 @@
 % bijzonder aan wat de link is met het vorige en volgende hoofdstuk.
 
 % Pas na deze inleidende paragraaf komt de eerste sectiehoofding.
-Digitale prijsvergelijkingstools en geautomatiseerde dataverzameling worden steeds belangrijker binnen de consumentenmarkt, in het bijzonder in sectoren met frequente prijswijzigingen zoals voedselretail. Het huidige onderzoek situeert zich op het kruispunt van drie relevante domeinen: webgebaseerde dataverzameling, productnormalisatie en prijsvergelijkingssystemen voor consumenten..
+In het vorige hoofdstuk is de probleemstelling geschetst: studenten in Gent hebben behoefte aan een prijsvergelijkingssysteem dat rekening houdt met praktische beperkingen zoals reisafstand en een beperkt budget. Dit hoofdstuk plaatst dat probleem in een bredere context door de stand van zaken in het onderzoeksdomein te beschrijven. Digitale prijsvergelijkingstools en geautomatiseerde dataverzameling worden steeds belangrijker in de voedselretail. Dit onderzoek situeert zich op het kruispunt van drie relevante domeinen: webgebaseerde dataverzameling, productnormalisatie- en prijsvergelijkingssystemen voor consumenten.
 
 \section{Context: voedselprijzen en studentendruk}
 
 Recente Belgische indicatoren wijzen op aanhoudende prijsdruk op voeding. Volgens het CPI-rapport van Statbel blijven de algemene en kerninflatie gedurende 2024-2025 hoog, met een kerninflatie van meer dan 2\% in oktober 2025\autocite{2025a-s, 2025b-s}. Onafhankelijke tracking door Testaankoop/Testachats meldt eveneens een supermarktspecifieke inflatie van ongeveer 4\% in 2025\autocite{2025a-t,2025b-t}. Bredere macro-economische analyses\autocite{OCED} tonen de gedetailleerde impact van inflatie aan en bevestigen de prijsdruk op consumenten.
 Samen onderbouwen deze bronnen de relevantie van het probleem voor prijsgevoelige groepen zoals studenten.
 
-\subsection{Bestaande oplossingen}
+\section{Bestaande oplossingen}
 
 Er zijn verschillende specifieke Belgische tools beschikbaar om consumenten te helpen supermarktprijzen te vergelijken en betere producten te selecteren, zoals PingPrice \autocite{pingprice} en G4U \autocite{g4u}. Beide apps hebben echter hun beperkingen. PingPrice vergelijkt producten met behulp van barcodes, waardoor het geen effectieve vergelijking kan maken tussen huismerkproducten of generieke producten die geen gestandaardiseerde identificatiecodes hebben. Hierdoor worden veel relevante artikelen uitgesloten van vergelijkingen.
 
 G4U biedt daarentegen uitgebreide product- en promotie-informatie, maar werkt als een betaalde dienst, waardoor de toegankelijkheid beperkt is voor studenten die al met financiële beperkingen kampen. Daarom is er behoefte aan een gratis en transparant alternatief waarmee gebruikers generieke productcategorieën kunnen vergelijken in plaats van barcodes.
 
-In de tabel \ref{tab:figuur1} worden er belangrijke punten visueel representeert.
+In Tabel \ref{tab:figuur1} worden de belangrijkste kenmerken visueel representeert.
 
 \section{Supermarktdata: webscraping als praktische pijplijn}
 
 Omdat Belgische retailers zelden API's voor product-/prijsfeeds openbaar maken, is webscraping een pragmatische manier om gestructureerde prijsgegevens van openbare pagina's te verkrijgen. Hoewel \autocite{Logos2023} en \autocite{Brown2024} een ethische en methodologische benadering van webscraping beschrijven, stellen ze geen specifieke technische implementatie voor voor gevallen waarin openbare API's niet beschikbaar zijn.
 
-Voortbouwend op hun aanbevelingen wordt in dit artikel het volgende proces voorgesteld:
-HTML-opvraging, parsing van de content, geautomatiseerde browserweergave voor JavaScript-afhankelijke content en opslag van de prijsgegevens. Deze aanpak voor de specifieke Belgische markt is geïnspireerd op het \autocite{Loon2018}-artikel van Statbel.
+Voortbouwend op hun aanbevelingen wordt in dit onderzoek het volgende proces voorgesteld:
+HTML-opvraging, parsing van de content, headless browser voor JavaScript-afhankelijke content en opslag van de prijsgegevens. Deze aanpak voor de specifieke Belgische markt is geïnspireerd op het \autocite{Loon2018} artikel van Statbel.
 
 \section{Juridische en ethische overwegingen voor scraping}
 
@@ -34,7 +34,7 @@ Scraping moet voldoen aan de servicevoorwaarden (ToS), intellectuele eigendomsre
 
 \section{Productmatching tussen retailers}
 
-Prijsvergelijking vereist het matchen van 'hetzelfde' artikel in alle winkels, ondanks verschillen in naamgeving/verpakkingsgrootte. De literatuur ondersteunt een tweefasenaanpak: 1. exacte identificatiegegevens (bijv. EAN/GTIN) indien beschikbaar; 2. benaderende/semantische matching met behulp van fuzzy similarity (Levehnstein/TF-IDF/cosinus) of ML-embeddings voor detectie van bijna-duplicaten \autocite{Kerek2020, Ning2022}. Deze methoden koppelen de door de gebruiker opgegeven productnaam direct aan de specifieke eenheid van de winkel.
+Prijsvergelijking vereist het matchen van 'hetzelfde' artikel in alle winkels, ondanks verschillen in naamgeving/verpakkingsgrootte. De literatuur ondersteunt een tweefasenaanpak: 1. exacte identificatiegegevens (bijv. EAN/GTIN) indien beschikbaar; 2. benaderende/semantische matching met behulp van fuzzy similarity (Levenshtein/TF-IDF/cosinus) of ML-embeddings voor detectie van bijna-duplicaten \autocite{Kerek2020, Ning2022}. Deze methoden koppelen de door de gebruiker opgegeven productnaam direct aan het specifieke productaanbod van de winkel.
 
 % Voor tekst die met OCR en fuzzy pipelines uit bonnen is gehaald, zie Rahmatsyah2025
 
@@ -43,22 +43,24 @@ Prijsvergelijking vereist het matchen van 'hetzelfde' artikel in alle winkels, o
 Vertrouwen is een cruciale factor die de bereidheid van gebruikers om digitale boodschappentools te gebruiken beïnvloedt.
 \autocite{Chakraborty2024} benadrukt het belang van geloofwaardigheid van informatie, duidelijkheid en de kwaliteit van de interactie om het vertrouwen van gebruikers in online boodschappenomgevingen te vergroten.
 Voortbouwend op dit perspectief benadrukt \autocite{DeZao2024} het vertrouwen in AI-gestuurde systemen. Door hun gegevensbronnen en tijdstempels te tonen, worden deze systemen transparanter en worden ze daardoor door gebruikers als betrouwbaarder en eerlijker ervaren.
-Bovendien beïnvloeden reële beperkingen, zoals reisafstand en de mogelijkheid om een ​​bepaald aantal winkels te bezoeken, het nut van dergelijke tools. Integratie van deze beperkingen breidt de criteria voor beslissingsondersteuning uit en verbetert deze.
+Bovendien beïnvloeden praktische beperkingen, zoals reisafstand en de mogelijkheid om een ​​bepaald aantal winkels te bezoeken, het nut van dergelijke tools. Integratie van deze beperkingen breidt de criteria voor beslissingsondersteuning uit en verbetert deze.
 
 Samenvattend ondersteunt de literatuur een pijplijn die webscraping, reproduceerbare matching (EAN-first + fuzzy/ML fallback) en transparante interfaces combineert die de bron en recentie blootleggen, geëvalueerd op precisie/recall voor matches en realistische, op de student gerichte beperkingen (bijv. afstand, maximaal aantal winkels) voor kostenresultaten.
 
 \begin{table}
   \centering
+  \caption{Functionele vergelijking tussen bestaande tools en het voorgestelde prototype}
+  \label{tab:figuur1}
   \begin{tabular}{lccr}
     \toprule
     \textbf{Kenmerk} & \textbf{PingPrice}& \textbf{G4U} & \textbf{Prototype} \\
     \midrule
-    Naam marching    & -           & ?             &  + \\
+    Naam matching    & -           & ?             &  + \\
     Transparantie    & -           & -             & + \\
-    Limiten          & -           & -             & + \\
+    Beperkingen (afstand/aantal winkels)& - & - & + \\
     Gratis           & +           & -             & + \\
     \bottomrule
   \end{tabular}
-  \caption[Functionele vergelijking tussen bestaande tools en het voorgestelde prototype]{\label{tab:figuur1}Functionele vergelijking tussen bestaande tools en het voorgestelde prototype.}
+  \caption*{+ = ondersteund, - = niet ondersteund, ? = gedeeltelijk/onduidelijk}
 \end{table}
 
