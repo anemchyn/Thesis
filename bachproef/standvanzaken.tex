@@ -10,7 +10,7 @@ In het vorige hoofdstuk is de probleemstelling geschetst: studenten in Gent hebb
 
 \section{Context: voedselprijzen en studentendruk}
 
-Recente Belgische indicatoren wijzen op aanhoudende prijsdruk op voeding. Volgens het CPI-rapport van Statbel blijven de algemene en kerninflatie gedurende 2024-2025 hoog, met een kerninflatie van meer dan 2\% in oktober 2025\autocite{2025a-s, 2025b-s}. Onafhankelijke tracking door Testaankoop/Testachats meldt eveneens een supermarktspecifieke inflatie van ongeveer 4\% in 2025\autocite{2025a-t,2025b-t}. Bredere macro-economische analyses\autocite{OCED} tonen de gedetailleerde impact van inflatie aan en bevestigen de prijsdruk op consumenten.
+Recente economische indicatoren van België wijzen op aanhoudende prijsdruk op voeding. Volgens het CPI-rapport van Statbel blijven de algemene en kerninflatie gedurende 2024-2025 hoog, met een kerninflatie van meer dan 2\% in oktober 2025\autocite{2025a-s, 2025b-s}. Onafhankelijke tracking door Testaankoop/Testachats meldt eveneens een supermarktspecifieke inflatie van ongeveer 4\% in 2025\autocite{2025a-t,2025b-t}. Bredere macro-economische analyses\autocite{OCED} tonen de gedetailleerde impact van inflatie aan en bevestigen de prijsdruk op consumenten.
 Samen onderbouwen deze bronnen de relevantie van het probleem voor prijsgevoelige groepen zoals studenten.
 
 \section{Bestaande oplossingen}
@@ -34,18 +34,18 @@ Scraping moet voldoen aan de servicevoorwaarden (ToS), intellectuele eigendomsre
 
 \section{Productmatching tussen retailers}
 
-Prijsvergelijking vereist het matchen van 'hetzelfde' artikel in alle winkels, ondanks verschillen in naamgeving/verpakkingsgrootte. De literatuur ondersteunt een tweefasenaanpak: 1. exacte identificatiegegevens (bijv. EAN/GTIN) indien beschikbaar; 2. benaderende/semantische matching met behulp van fuzzy similarity (Levenshtein/TF-IDF/cosinus) of ML-embeddings voor detectie van bijna-duplicaten \autocite{Kerek2020, Ning2022}. Deze methoden koppelen de door de gebruiker opgegeven productnaam direct aan het specifieke productaanbod van de winkel.
+Prijsvergelijking vereist het matchen van 'hetzelfde' artikel in alle winkels, ondanks verschillen in naamgeving/verpakkingsgrootte. Bestaande literatuur ondersteunt een tweefasenaanpak: 1. exacte identificatiegegevens (bijv. EAN/GTIN) indien beschikbaar; 2. benaderende/semantische matching met behulp van fuzzy similarity (Levenshtein/TF-IDF/cosinus) of ML-embeddings voor detectie van bijna-duplicaten \autocite{Kerek2020, Ning2022}. Deze methoden koppelen de door de gebruiker opgegeven productnaam direct aan het specifieke productaanbod van de winkel.
 
 % Voor tekst die met OCR en fuzzy pipelines uit bonnen is gehaald, zie Rahmatsyah2025
 
 \section{Beslissingsondersteuning, vertrouwen en beperkingen in boodschappenapps}
 
 Vertrouwen is een cruciale factor die de bereidheid van gebruikers om digitale boodschappentools te gebruiken beïnvloedt.
-\autocite{Chakraborty2024} benadrukt het belang van geloofwaardigheid van informatie, duidelijkheid en de kwaliteit van de interactie om het vertrouwen van gebruikers in online boodschappenomgevingen te vergroten.
-Voortbouwend op dit perspectief benadrukt \autocite{DeZao2024} het vertrouwen in AI-gestuurde systemen. Door hun gegevensbronnen en tijdstempels te tonen, worden deze systemen transparanter en worden ze daardoor door gebruikers als betrouwbaarder en eerlijker ervaren.
-Bovendien beïnvloeden praktische beperkingen, zoals reisafstand en de mogelijkheid om een ​​bepaald aantal winkels te bezoeken, het nut van dergelijke tools. Integratie van deze beperkingen breidt de criteria voor beslissingsondersteuning uit en verbetert deze.
+\autocite{Chakraborty2024} benadrukt het belang van geloofwaardigheid van informatie, duidelijkheid en kwaliteit van de interactie om het vertrouwen van gebruikers in online boodschappenomgevingen te vergroten.
+Voortbouwend op dit perspectief benadrukt \autocite{DeZao2024} het vertrouwen in AI-gestuurde systemen. Door hun gegevensbronnen en tijdstempels te tonen, worden deze systemen transparanter en daardoor ook als betrouwbaarder en eerlijker ervaren door gebruikers.
+Bovendien beïnvloeden praktische beperkingen, zoals reisafstand en de mogelijkheid om slechts een ​​bepaald aantal winkels te bezoeken, het nut van dergelijke tools. Integratie van deze beperkingen breidt de criteria voor beslissingsondersteuning verder uit en verbetert deze.
 
-Samenvattend ondersteunt de literatuur een pijplijn die webscraping, reproduceerbare matching (EAN-first + fuzzy/ML fallback) en transparante interfaces combineert die de bron en recentie blootleggen, geëvalueerd op precisie/recall voor matches en realistische, op de student gerichte beperkingen (bijv. afstand, maximaal aantal winkels) voor kostenresultaten.
+Samenvattend, de literatuur ondersteunt een pijplijn die webscraping, reproduceerbare matching (EAN-first + fuzzy/ML fallback) en transparante interfaces combineert, geëvalueerd op precisie/recall voor matches en realistische, op de student gerichte beperkingen (bijv. afstand, maximaal aantal winkels) voor kostenresultaten.
 
 \begin{table}
   \centering
