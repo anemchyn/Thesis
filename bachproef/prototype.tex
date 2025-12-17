@@ -1,0 +1,173 @@
+
+
+\chapter{\IfLanguageName{dutch}{Prototype}{Prototype}}%
+\label{ch:prototype}
+
+
+Het prototype dat in deze bachelorproef werd ontwikkeld, is een proof-of-cooncept van een web scraping applicatie die bruikbaar is voor een breed publiek - met name studenten - dat niet beschikt over uitgebreide kennis van programmeren of softwareontwikkeling. De gebruiker heeft slechts een internetverbinding nodig en hoeft geen technische configuraties uit te voeren.
+
+Deze doelstelling impliceert dat de technische complexiteit van web scraping wordt volledig afgeschermd van de eindgebruiker. Interacties met het systeem gebeuren via een eenvoudige en intuïtieve gebruikersinterface, terwijl alle processen zoals het ophalen van webpagina’s, het verwerken van data, het omgaan met anti-scrapingsmechanismen en de opslag van gegevens, achter de schermen verlopen.
+
+Het prototype fungeert dus als een laag tussen de gebruiker en de onderliggende scrapingsinfrastructuur, waarbij gebruiksvriendelijkheid en betrouwbaarheid centraal staan.
+
+\section{Keuze van programmeertaal en frameworks}
+
+De keuze van programmeertaal en bijhorende frameworks vormt een essentiële ontwerpbeslissing binnen dit prototype. Literatuur toont aan dat verschillende programmeertalen geschikt zijn voor web scraping, waaronder Python, JavaScript en C\#. Op basis van vergelijkende studies en best practices \autocite{5BestLang, StateofArt, BestPractice2025, PvsJS} is Python gekozen als primaire programmeertaal voor het prototype.
+
+Deze keuze voor Python kan gemotiveerd worden door meerdere factoren. Ten eerste beschikt Python over een uitgebreid ecosysteem van bibliotheken die specifiek ontworpen zijn voor interactie met de inhoud van websites, zoals \textit{Requests}, \textit{BeautifulSoup}, \textit{Scrapy} en \textit{Playwright}. Hierdoor kan snel en efficiënt worden ingespeeld op uiteenlopende scrapingsuitdagingen, variërend van eenvoudige HTML-pagina’s tot complexe, dynamisch gegenereerde webinhoud. 
+Ten tweede is Python relatief eenvoudig aan te leren, wat het bijzonder geschikt maakt voor beginnende ontwikkelaars en studenten. De leesbaarheid van de syntaxis en de grote hoeveelheid beschikbare documentatie en voorbeelden verlagen de instapdrempel aanzienlijk. Dit sluit aan bij de doelstelling van dit prototype, namelijk het ontwikkelen van een systeem dat toegankelijk is voor gebruikers zonder diepgaande programmeerkennis.
+Tot slot biedt Python voldoende mogelijkheden voor toekomstige uitbreidingen, zoals grootschalige dataverwerking, data-analyse en integratie van machine learning technieken. Hierdoor is Python niet alleen geschikt voor het huidige prototype, maar ook toekomstbestendig.
+
+Binnen het Python-ecosysteem bestaan meerdere bibliotheken voor web scraping. Na een vergelijking werd gekozen voor \textit{Scrapy} als centraal scrapingsframework. Deze keuze kan onderbouwd worden door het werk van \autocite{Eyzenakh2021}, waarin verschillende scrapingsoplossingen zijn vergeleken op vlak van performantie, schaalbaarheid en architecturale opbouw. Scrapy onderscheidt zich van eenvoudigere oplossingen zoals \textit{Requests} en \textit{BeautifulSoup} door zijn asynchrone en event-gedreven architectuur. Dit maakt het mogelijk om meerdere webpagina’s gelijktijdig te verwerken, wat resulteert in betere prestaties en efficiënter gebruik van systeembronnen. 
+Daarnaast voorziet Scrapy ingebouwde ondersteuning voor request scheduling, foutafhandeling, throttling en uitbreidbare pipelines voor dataverwerking. Een bijkomend voordeel van Scrapy is de duidelijke scheiding tussen verschillende verantwoordelijkheden, zoals het ophalen van data, het parsen van responses en het verwerken van resultaten. Deze modulaire opbouw sluit nauw aan bij de architecturale principes die in de literatuur worden beschreven en verhoogt de onderhoudbaarheid van het systeem.
+
+Hoewel Scrapy krachtig is voor het verwerken van statische HTML-pagina’s, volstaat het niet in alle situaties. Steeds meer websites maken gebruik van JavaScript om inhoud dynamisch te genereren. Om deze pagina’s correct te kunnen verwerken, werd \textit{Playwright} geïntegreerd in het scrapingsproces.
+Playwright maakt het mogelijk om een echte browseromgeving te simuleren en JavaScript-code uit te voeren alvorens de HTML wordt geëxtraheerd. Hierdoor kunnen ook websites met complexe client-side logica succesvol gescrapet worden. De combinatie van Scrapy en Playwright zorgt voor een flexibele aanpak waarbij per website de meest geschikte scrapingstrategie kan worden toegepast. 
+
+Om de verschillende lagen binnen het systeem van elkaar te ontkoppelen, werd gekozen voor Apache Kafka als verbindende component tussen de scrapingslaag en verdere verwerking van data. Kafka fungeert hierbij als een message broker die ruwe scrapingsresultaten doorstuurt naar volgende verwerkingsstappen.
+De keuze voor Kafka is geïnspireerd door moderne, event-gedreven architecturen zoals beschreven in \autocite{Kafka2015}. Door gebruik te maken van een message broker wordt de afhankelijkheid tussen scraping en verwerking verminderd. Dit verhoogt de schaalbaarheid en fouttolerantie van het systeem en maakt het mogelijk om data opnieuw te verwerken zonder de scrapingsfase te herhalen.
+Hoewel Kafka in dit prototype niet noodzakelijk op industriële schaal wordt ingezet, biedt het conceptueel een duidelijke meerwaarde en vormt het een solide basis voor toekomstige uitbreidingen.
+
+Voor de backend van het prototype werd gekozen voor het Django-framework. Django sluit naadloos aan bij Python en biedt uitgebreide ondersteuning voor webapplicaties, databankintegratie en gebruikersinteractie.
+Een belangrijk voordeel van Django is de eenvoudige koppeling met Python-gebaseerde scrapingscomponenten. Hierdoor kunnen scrapingsprocessen, dataverwerking en gebruikersinterface binnen één technologisch ecosysteem worden geïntegreerd. Daarnaast voorziet Django standaardfunctionaliteiten zoals ORM (Object-Relational Mapping), authenticatie en administratie, wat de ontwikkeltijd aanzienlijk verkort.
+
+Om de reproduceerbaarheid en consistentie van het systeem op verschillende machines te garanderen, werd gebruikgemaakt van Docker. Docker maakt het mogelijk om de volledige applicatie, inclusief afhankelijkheden, configuraties en services, te verpakken in containers. Hierdoor kan het prototype zonder bijkomende installatieproblemen uitgevoerd worden op verschillende systemen, wat zowel de ontwikkeling als de evaluatie vereenvoudigt.
+
+De combinatie van Python, Scrapy, Kafka, Django en Docker resulteert in een coherente en uitbreidbare architectuur waarin elke technologie een duidelijk afgebakende rol vervult.
+
+
+\section{Klassieke web scraping pijplijn}
+
+De structuur van web scraping systemen wordt in de literatuur vaak beschreven als een opeenvolging van afzonderlijke verwerkingsstappen. \autocite{Laender2002} en \autocite{StateofArt} beschrijven web data extractie als een pijplijn bestaande uit meerdere logisch gescheiden fasen:
+
+\begin{itemize}
+    \item selectie van databronnen;
+    \item extractie van ruwe data;
+    \item transformatie en normalisatie;
+    \item integratie en opslag.
+\end{itemize}
+
+Deze architecturale scheiding verhoogt de onderhoudbaarheid van het systeem en maakt hergebruik en schaalbaarheid mogelijk. Het prototype volgt deze pijplijnstructuur expliciet.
+Op basis van de overleg met de co-promotor en de besproken state-of-the-art werd een modulaire architectuur voorgesteld. Deze architectuur is weergegeven in Figuur~\ref{fig:architectuur_overzicht}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{scheme2.jpg}
+    \caption{Overzicht van de voorgestelde prototype-architectuur}
+    \label{fig:architectuur_overzicht}
+\end{figure}
+
+De architectuur bestaat uit vijf hoofdlagen:
+\begin{enumerate}
+    \item gebruikersinterface
+    \item scrapinglaag
+    \item opslag van ruwe data
+    \item transformatielaag
+    \item gestructureerde databank
+\end{enumerate}
+
+Figuur~\ref{fig:architectuur_overzicht2}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{scheme.jpg}
+\caption{Overzicht van de voorgestelde prototype-architectuur}
+\label{fig:architectuur_overzicht2}
+\end{figure}
+
+\section{Gebruikersinterface}
+
+De gebruikersinterface vormt het enige contactpunt tussen de gebruiker en het systeem.
+De gebruiker kan via de interface aangeven welke website of productcategorie gescrapet moet worden. De verdere technische uitvoering wordt volledig door het systeem afgehandeld.
+
+
+\section{Scrapinglaag}
+
+\subsection{Initiële aanpak en beperkingen}
+
+In een eerste experimentele fase werd gebruikgemaakt van de combinatie \textit{Requests} en \textit{BeautifulSoup}. Hoewel deze aanpak eenvoudig te implementeren is, bleek ze in de praktijk onvoldoende robuust.
+Tijdens tests werden meerdere HTTP-foutcodes waargenomen, waaronder: 403 (Forbidden), 456 (Quota exceeded).
+Bovendien werd vastgesteld dat bepaalde websites, zoals Carrefour, gebruikmaken van Cloudflare om niet-menselijk verkeer te detecteren en te blokkeren Figuur~\ref{fig:blocked}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{blocked.jpg}
+    \caption{Gedetecteerd met BeautifulSoup}
+    \label{fig:blocked}
+\end{figure}
+
+\subsection{Overstap naar Scrapy en Playwright}
+
+Op advies van de co-promotor werd overgestapt naar het Scrapy-framework. Scrapy biedt uitgebreide mogelijkheden voor request scheduling, foutafhandeling en data-extractie, en is gebaseerd op een asynchrone, event-gedreven architectuur. Door het scrapingproces te mogen isoleren en als een afzonderlijke service of proces uit te voeren, wordt het systeem beter bestand tegen fouten en netwerkproblemen. Hierdoor blijft de rest van de applicatie operationeel, zelfs wanneer scraping taken falen of tijdelijk onderbroken worden. 
+Daarnast om detectie te vermijden, wordt gebruikgemaakt van \textit{scrapy-impersonate}, waarmee browserheaders en gebruikersgedrag geïmiteerd kunnen worden. Voor websites met dynamische content werd Scrapy gecombineerd met Playwright, zodat JavaScript-elementen correct kunnen worden geladen.
+
+\subsection{Website-specifieke scrapingstrategieën}
+
+Voor de verschillende webshops werden specifieke scrapingstrategieën toegepast:
+
+\begin{itemize}
+    \item \textbf{Albert Heijn}: data wordt opgehaald via de GraphQL-API, waarbij JSON-responses rechtstreeks worden verwerkt \autocite{AHGraphQL}.
+    \item \textbf{Carrefour}: HTML-scraping met Scrapy en browser-imitatie.
+    \item \textbf{Colruyt}: scraping met Scrapy in combinatie met Playwright om JavaScript-gegenereerde content te laden.
+\end{itemize}
+
+Deze aanpak minimaliseert blokkades en verhoogt de betrouwbaarheid van het scrapingproces.
+
+\section{Opslag van ruwe data}
+
+Alle opgehaalde data wordt initieel opgeslagen als ruwe, ongestructureerde data. Deze keuze biedt meerdere voordelen. Ten eerste kan data opnieuw verwerkt worden zonder opnieuw te scrapen. Ten tweede blijft de oorspronkelijke brondata beschikbaar voor validatie en foutanalyse.
+
+Deze stap sluit conceptueel aan bij event-gedreven architecturen waarbij data eerst als onbewerkte events wordt opgeslagen.
+
+\section{Transformatielaag}
+
+De transformatielaag is verantwoordelijk voor het omzetten van ruwe data naar een gestructureerd formaat. In deze fase worden onder andere:
+
+\begin{itemize}
+    \item productnamen opgeschoond;
+    \item prijsnotaties genormaliseerd;
+    \item eenheden geharmoniseerd;
+    \item irrelevante HTML-elementen verwijderd.
+\end{itemize}
+
+Door transformatie los te koppelen van scraping wordt het systeem beter onderhoudbaar en uitbreidbaar.
+
+\section{Gestructureerde opslag}
+
+Na transformatie wordt de data opgeslagen in een relationele databank, in dit prototype PostgreSQL. Deze databank vormt de basis voor verdere analyse, prijsvergelijkingen en mogelijke visualisaties.
+
+\section{Conclusie}
+
+Het prototype combineert een gebruiksvriendelijke interface met een modulaire en schaalbare backend-architectuur. Door de scheiding tussen scraping, opslag en transformatie sluit het ontwerp nauw aan bij zowel academische literatuur als hedendaagse best practices.
+
+Deze architectuur biedt een solide basis voor verdere uitbreidingen, zoals automatische planning van scrapingtaken, ondersteuning voor bijkomende websites en grootschalige data-analyse.
+
+
+
+
+
+
+
+%The prototype starts at outlining the work. This is meant to be used by an average student without extra knowlage of programming and access to the internet. That points to a need of simple ui interface and the rest needs to happen behind the sines of it.
+%
+%The choice of the languages and frameworks is wide. Based on the articles \autocitate{5BestLang, StateofArt, BestPractice2025, PvsJS} Python was chosen for the main language of scraping. This choice was dectated by the amount of libraries thst are avilable, available knowlage of co-promoter and the ease of use for the web-scraping beginners. As well as an outlook for large data processing in the future.
+%
+%The structure of web scraping is outlined in the  \autocitate{Laender2002} with inspiration for Kafka usage from \autocitate{Eyzenakh2021} and \autocitate{Kafka2015} with its diagram.
+%
+%Verder in de bespreking met de co-promoter zijn we gekomen tot de volgende architectuur:
+%
+%
+%Architectuur uitwerken: in bespreking met co-promoter heeft hij state of art uitgelegd en daarbij volgende architectuur van de app was voorgesteld:
+%*pic*
+%*Bechrijving daarvan*
+%
+%Geprobeerd beautiful soup + requests, daar wordt er makkelijk gedetecteerd dat het geen echte persoon is.
+%Daar 403 en 456 tegengekomen. En ik werd geblocked door cloudfaire van carrefour met gewone requests.
+%
+%Daarna van Co-promoter angeraaden om scrapy te gebruiken en beter scrapy impersenate om headers van de browser na te doen. Aanpak: 1. Graphql van AH aanspreken met json als een antwoord. 2. Carrefour de pagina zelf scrapen. 3. Coloryt scrapen van de pagina met playwrite om js elementen te loaden.
+%
+%
+%https://github.com/JaapWestera/albert-heijn-graphql-api/tree/main?tab=readme-ov-file
+%
+%https://www.scrapingbee.com/blog/scrapy-playwright-tutorial/
+%https://medium.com/@geneng/web-crawling-made-easy-with-scrapy-and-rest-api-ed993e84abd3
