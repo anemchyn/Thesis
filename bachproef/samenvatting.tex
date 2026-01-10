@@ -33,21 +33,15 @@
 % Wie zijn bachelorproef in het Nederlands schrijft, kan dit negeren, de inhoud
 % wordt niet in het document ingevoegd.
 
-\IfLanguageName{english}{%
-\selectlanguage{dutch}
-\chapter*{Samenvatting}
-\selectlanguage{english}
-}{}
-
 %%---------- Samenvatting -----------------------------------------------------
 % De samenvatting in de hoofdtaal van het document
 
-\chapter*{\IfLanguageName{dutch}{Samenvatting}{Abstract}}
+\chapter{Samenvatting}
 
-De stijgende voedselprijzen in België leggen een groeiende financiële druk op studenten met een beperkt budget en beperkte mobiliteit. Bestaande prijsvergelijkingstools houden onvoldoende rekening met praktische beperkingen van winkelen, zoals reisafstand en het aantal winkels dat een consument bereid is te bezoeken. Bovendien baseren veel tools zich op barcodevergelijking, waardoor huismerken vaak buiten de scope worden gelaten. Daarnaast staan veel van deze diensten of hun extra functies achter een betaalmuur.
+De stijgende voedselprijzen in België leggen een groeiende financiële druk op studenten met een beperkt budget en beperkte mobiliteit. Bestaande prijsvergelijkingstools houden onvoldoende rekening met praktische beperkingen van winkelen, namelijk productnaam matching. Die tools baseren zich vooral op barcodevergelijking, waardoor kan de gebruiker niet altijd het product vinden en worden huismerken vaak buiten de scope gelaten. Daarnaast staan veel van deze diensten of hun extra functies achter een betaalmuur.
 
-Dit onderzoek richt zich op het ontwerpen van een systeem dat consumenten, met name studenten in Gent, ondersteunt om weloverwogen beslissingen te kunnen nemen over hun boodschappen. De centrale onderzoeksvraag luidt: “Hoe kan een transparant en schaalbaar systeem worden ontworpen en ontwikkeld om automatisch supermarktprijzen in België te verzamelen, matchen en vergelijken, rekening houdend met beperkingen, zoals afstand en het aantal te bezoeken winkels?”
+Dit onderzoek richt zich op het ontwerpen van een systeem dat consumenten, met name studenten in Vlaanderen, ondersteunt om weloverwogen beslissingen te kunnen nemen over hun boodschappen. De centrale onderzoeksvraag luidt: “Hoe kan een transparant en schaalbaar systeem worden ontworpen en ontwikkeld om automatisch supermarktprijzen in België te verzamelen, te matchen en te vergelijken, met gebruik van een semantisch matchingsysteem?”
 
-Het voorgestelde prototype wordt ontwikkeld in Python en Django, waarbij gebruik wordt gemaakt van webscrapingstechnieken om prijsgegevens van Belgische supermarktwebsites te verzamelen. De gegevens worden opgeslagen in een PostgreSQL-database. Gebruikers kunnen een boodschappenlijst invoeren en een maximale reisafstand of een limiet voor het aantal winkels instellen. Vervolgens wordt het meest kostefficiënte aankoopplan door het systeem berekend. De gegenereerde voorstellen worden geëvalueerd door hun besparingen te vergelijken met een aankoop van alle boodschappen in één winkel, op basis van vooraf gedefinieerde boodschappenlijsten. De resultaten zijn merkbare besparingen over alle voorgestelde boodschappenlijsten. 
+Het voorgestelde prototype wordt ontwikkeld in Python en Django, waarbij gebruik wordt gemaakt van webscrapingstechnieken om prijsgegevens van Belgische supermarktwebsites te verzamelen. De gegevens worden opgeslagen in een PostgreSQL-database. Gebruikers kunnen een product opzoeken om de prijzen in verschillende winkels in een oogopslag vergelijken. Een andere mogelijkheid is om een boodschappenlijst in te voeren. Vervolgens wordt het meest kostefficiënte aankoopplan door het systeem berekend. De gegenereerde voorstellen worden geëvalueerd door hun besparingen te vergelijken met een aankoop van alle boodschappen in één winkel, op basis van vooraf gedefinieerde boodschappenlijsten. Hoewel het systeem duidelijk tijdsbesparend is voor de gebruiker, leiden enkel semantische matches op zich niet tot kostbesparingen.
 
-Dit project draagt ​​bij aan een realistisch en toegankelijk prijsvergelijkingssysteem gericht op studenten door technische efficiëntie te combineren met consumentgerichte beperkingen. Dit stelt studenten in staat bewuster en voordeliger te winkelen.
+Dit project draagt bij aan een realistisch en toegankelijk prijsvergelijkingssysteem gericht op studenten. Dit stelt studenten in staat bewuster en voordeliger te winkelen.

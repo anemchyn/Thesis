@@ -4,15 +4,16 @@
 
 \chapter{Conclusie}%
 \label{ch:conclusie}
+Dit onderzoek startte vanuit de onderzoeksvraag: \textbf{``Hoe kan een transparant en schaalbaar systeem worden ontworpen en ontwikkeld om automatisch supermarktprijzen in België te verzamelen, te matchen en te vergelijken, met gebruik van een semantisch matchingsysteem?''}
 
-% TODO: Trek een duidelijke conclusie, in de vorm van een antwoord op de
-% onderzoeksvra(a)g(en). Wat was jouw bijdrage aan het onderzoeksdomein en
-% hoe biedt dit meerwaarde aan het vakgebied/doelgroep? 
-% Reflecteer kritisch over het resultaat. In Engelse teksten wordt deze sectie
-% ``Discussion'' genoemd. Had je deze uitkomst verwacht? Zijn er zaken die nog
-% niet duidelijk zijn?
-% Heeft het onderzoek geleid tot nieuwe vragen die uitnodigen tot verder 
-%onderzoek?
+De resultaten tonen aan dat het technisch haalbaar is om met een Scrapy-gebaseerde scrapingpipeline op een relatief betrouwbare manier prijsinformatie te verzamelen uit heterogene bronnen. Door Apache Kafka te gebruiken als asynchrone berichtlaag worden de verschillende systeemonderdelen (gebruikersinterface, scraping, normalisatie en opslag) logisch ontkoppeld. Deze scheiding verhoogt de stabiliteit en maakt het mogelijk om de oplossing schaalbaar en fouttolerant op te zetten: falende of trage scrapingprocessen blokkeren de gebruikersinterface niet, en verwerking kan desgewenst horizontaal opgeschaald worden via meerdere workers.
 
-\lipsum[76-80]
+Daarnaast blijkt uit de uitgevoerde winkelmandtesten dat het systeem de gebruiker tijd kan besparen in vergelijking met manuele prijsvergelijking. Vooral bij herhaalde zoekopdrachten en grotere winkelmanden wordt de meerwaarde zichtbaar, doordat de applicatie automatisch resultaten verzamelt, structureert en presenteert.
+
+Tegelijkertijd werd een belangrijke beperking blootgelegd: een semantische matchingaanpak die voornamelijk steunt op producttitels is op zichzelf onvoldoende om consequent de goedkoopste optie te selecteren. Productnamen zijn sterk afhankelijk van de retailer en bevatten vaak variaties, marketingtermen en ongenormaliseerde beschrijvingen. De gebruiker daarentegen focust in de praktijk eerder op prijs en alleen dan op exacte titelovereenkomsten. Hierdoor ontstaat een spanningsveld tussen ``beste match'' en ``laagste prijs'': de meest relevante match is niet noodzakelijk de goedkoopste beschikbare optie.
+
+Om deze discrepantie te beperken werd binnen de applicatie gekozen voor een compromisstrategie, waarbij producten eerst worden gerangschikt op basis van matchkwaliteit (o.a.\ exacte overeenkomst, volledig-woorddetectie en fuzzy matching) en vervolgens op prijscriteria. Deze aanpak verhoogt de betrouwbaarheid van de getoonde resultaten en reduceert foutieve matches, maar kan ertoe leiden dat een minimaal goedkopere, minder relevante optie lager in de ranking verschijnt.
+
+Samenvattend bewijst dit project dat een geautomatiseerde prijsvergelijker met een event-driven architectuur technisch haalbaar is en duidelijke gebruikswaarde heeft, vooral als tijdsbesparend hulpmiddel. Verdere vooruitgang hangt echter sterk af van verbeterde productnormalisatie en rijkere identificatoren (bv.\ EAN/GTIN, verpakkingsgrootte, vaste producttaxonomie) of meer geavanceerde semantische modellen die beter rekening houden met context. Hierdoor kan in toekomstig werk de kloof tussen ``relevantie'' en ``prijsoptimalisatie'' verder worden verkleind en kan het systeem niet enkel tijdsbesparing bieden, maar ook betrouwbaarder prijsvoordeel maximaliseren.
+
 

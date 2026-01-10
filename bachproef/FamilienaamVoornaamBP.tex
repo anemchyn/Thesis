@@ -4,8 +4,9 @@
 %===============================================================================
 
 \documentclass[dutch,dit,thesis]{hogentreport}
+\addbibresource{bachproef.bib}            %% Bibliography file
 % Invoegen bibliografiebestand
-\addbibresource{bachproef.bib}
+
 
 % TODO:
 % - If necessary, replace the option `dit`' with your own department!
@@ -13,7 +14,33 @@
 % - If you write your thesis in English (remark: only possible after getting
 %   explicit approval!), remove the option "dutch," or replace with "english".
 \usepackage{tikz}
+\usetikzlibrary{matrix, positioning, arrows.meta}
 \usepackage{listings}
+\usepackage{xcolor}
+\lstdefinelanguage{YAML}{
+    keywords={true,false,null,y,n},
+    keywordstyle=\color{blue},
+    sensitive=false,
+    comment=[l]{\#},
+    commentstyle=\color{gray},
+    stringstyle=\color{teal},
+    morestring=[b]',
+    morestring=[b]"
+}
+\lstset{
+    basicstyle=\ttfamily\small,
+    columns=fullflexible,
+    keepspaces=true,
+    showstringspaces=false,
+    breaklines=true,
+    upquote=true,
+    literate={_}{\_}1
+}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{pgfplots}
+\usepackage{threeparttable} 
+\pgfplotsset{compat=1.18}
 \usepackage{lipsum} % For blind text, can be removed after adding actual content
 
 %% Pictures to include in the text can be put in the graphics/ folder
@@ -138,6 +165,7 @@
 \input{methodologie}
 \input{prototype}
 \input{testen}
+\input{toekomstig_werk}
 
 % Voeg hier je eigen hoofdstukken toe die de ``corpus'' van je bachelorproef
 % vormen. De structuur en titels hangen af van je eigen onderzoek. Je kan bv.

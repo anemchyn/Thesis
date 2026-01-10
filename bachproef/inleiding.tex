@@ -16,7 +16,7 @@ Studenten ondervinden vaak uitdagingen bij het vinden van de meest kosteneffici�
 \section{\IfLanguageName{dutch}{Onderzoeksvraag}{Research question}}%
 \label{sec:onderzoeksvraag}
 
-Om een ​​dergelijk systeem te ontwikkelen, moet de volgende hoofdonderzoeksvraag worden beantwoord: Hoe ontwerp en ontwikkel je een transparant en schaalbaar systeem dat automatisch supermarktprijzen in Gent kan verzamelen, matchen en vergelijken, rekening houdend met de afstand tot de consument en een door de gebruiker opgegeven limiet voor het aantal te bezoeken winkels?
+Om een ​​dergelijk systeem te ontwikkelen, moet de volgende hoofdonderzoeksvraag worden beantwoord: Hoe kan een transparant en schaalbaar systeem worden ontworpen en ontwikkeld om automatisch supermarktprijzen in België te verzamelen, te matchen en te vergelijken, met gebruik van een semantisch matchingsysteem?
 
 \section{Deelvragen}
 \label{sec:deelvragen}
@@ -25,14 +25,12 @@ Verder moet onderzoek worden gedaan naar de programmatische en architecturale de
 \begin{itemize}
     \item Hoe kunnen supermarktprijsgegevens automatisch worden verzameld en gestructureerd?
     \item Welke benaderingen kunnen worden gebruikt om algemene productnamen te matchen en zo nauwkeurige vergelijkingen te maken?
-    \item Hoe kan het systeem de meest kosteneffectieve combinaties van winkels binnen een door de gebruiker gedefinieerde afstand en een winkellimiet berekenen en aanbevelen?
     \item Hoe kan de systeemarchitectuur worden ontworpen om schaalbaarheid en transparantie van de data te ondersteunen?
     \item Aan welke criteria moet het prototype voldoen om als een geldig proof-of-concept te worden beschouwd?
 \end{itemize}
 
 Om deze vragen te beantwoorden en het onderzoek te sturen, is inzicht vereist in de doelgroep en de probleemcontext. Meer specifiek:
 \begin{itemize}
-    \item Welke factoren beïnvloeden momenteel de consumptiegewoonten van studenten in België?
     \item Welke tools voor prijsvergelijking zijn er in België beschikbaar en welke tekortkomingen hebben ze voor studenten?
     \item Welke technische en praktische uitdagingen zijn er bij het verzamelen van prijsgegevens van Belgische supermarkten?
 \end{itemize}
@@ -40,7 +38,7 @@ Om deze vragen te beantwoorden en het onderzoek te sturen, is inzicht vereist in
 \section{\IfLanguageName{dutch}{Onderzoeksdoelstelling}{Research objective}}%
 \label{sec:onderzoeksdoelstelling}
 
-Het resultaat van dit onderzoek is een prototype, geïmplementeerd met Python en Django, dat prijsgegevens verzamelt via webscraping van Belgische supermarktwebsites. Gebruikers van dit prototype kunnen een algemene boodschappenlijst invoeren en een maximale reisafstand of een limiet voor het aantal winkels opgeven. Het systeem berekent vervolgens de meest kostenefficiënte combinatie van winkels op basis van deze beperkingen. Het systeem wordt geëvalueerd met behulp van een vooraf gedefinieerde standaardboodschappenlijst voor studenten om de totale kosten van een aankoop in één winkel te vergelijken met de door het systeem gegenereerde, geoptimaliseerde aanbeveling voor meerdere winkels.
+Het resultaat van dit onderzoek is een prototype, geïmplementeerd met Python en Django, dat prijsgegevens verzamelt via webscraping van Belgische supermarktwebsites. Gebruikers van dit prototype kunnen producten en een algemene boodschappenlijst invoeren. Het systeem berekent vervolgens de meest kostenefficiënte combinatie van winkels. Het systeem wordt geëvalueerd met behulp van een vooraf gedefinieerde standaardboodschappenlijst voor studenten om de totale kosten van een aankoop in één winkel te vergelijken met de door het systeem gegenereerde, geoptimaliseerde aanbeveling voor meerdere winkels.
 
 Dit onderzoek draagt ​​bij aan de ontwikkeling van realistische en toegankelijke tools voor supermarktprijsvergelijking die technische efficiëntie combineren met consumentgerichte beperkingen. Door zich te richten op de behoeften van studenten, beoogt het systeem de prijstransparantie te vergroten en weloverwogen, budgetbewuste winkelbeslissingen te ondersteunen. Het biedt praktische inzichten die toekomstige consumentgerichte toepassingen kunnen inspireren.
 
@@ -57,6 +55,12 @@ In Hoofdstuk~\ref{ch:stand-van-zaken} wordt een overzicht gegeven van de stand v
 
 In Hoofdstuk~\ref{ch:methodologie} wordt de methodologie toegelicht en worden de gebruikte onderzoekstechnieken besproken om een antwoord te kunnen formuleren op de onderzoeksvragen.
 
-% TODO: Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
+In Hoofdstuk~\ref{ch:prototype} wordt het werk beschreven dat werd verricht om het project op te bouwen, met een focus op de gekozen architectuur, de gebruikte technologieën en de implementatie van de belangrijkste systeemcomponenten.
 
-In Hoofdstuk~\ref{ch:conclusie}, tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.
+In Hoofdstuk~\ref{ch:testen} wordt de applicatie onderworpen aan een reeks realistische gebruiksscenario’s. Deze testen hebben tot doel om de correctheid van de resultaten, de stabiliteit van het systeem en de bruikbaarheid van de applicatie in een realistische context te evalueren.
+
+
+In Hoofdstuk~\ref{ch:toekomstig_werk} worden de beperkingen van het huidige systeem besproken en worden mogelijke uitbreidingen en verbeteringen voor toekomstig werk voorgesteld.
+
+
+In Hoofdstuk~\ref{ch:conclusie}, tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvraag.

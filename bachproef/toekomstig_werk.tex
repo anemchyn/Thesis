@@ -1,0 +1,63 @@
+\chapter{Beperkingen en Toekomstig Werk}
+\label{ch:toekomstig_werk}
+
+Hoewel het ontwikkelde prijsvergelijkingssysteem functioneel en architecturaal robuust is, zijn er verschillende beperkingen die voortkomen uit de scope van het project, de beschikbare data en de gekozen technieken.
+
+\section{Beperkingen van de huidige implementatie}
+
+\subsection{Productnormalisatie en eenheidsvergelijking}
+
+Hoewel het systeem prijzen per eenheid opslaat (bijvoorbeeld prijs per kilogram of liter), is de normalisatie van eenheden momenteel beperkt tot de informatie die expliciet door de retailers wordt aangeleverd. Producten met verschillende verpakkingsgroottes of afwijkende eenheden (bijvoorbeeld stuks versus gewicht) worden niet automatisch naar een gemeenschappelijke maat omgerekend. Het wordt nu aangenomen dat alle winkels dezelfde eenheid gebruiken.
+
+Dit betekent dat sommige vergelijkingen enkel correct zijn indien alle retailers consistente eenheidsinformatie aanbieden. Volledige automatische eenheidsconversie (bijvoorbeeld ml naar liter of gram naar kilogram) zou extra semantische interpretatie vereisen en valt buiten de huidige scope.
+
+\subsection{Product- en merkdeduplicatie}
+
+Het huidige datamodel behandelt producten primair op basis van hun naam. Hoewel dit in combinatie met het gelaagde matching-algoritme in de meeste gevallen correcte resultaten oplevert, bestaat het risico dat identieke producten met licht verschillende benamingen (bijvoorbeeld door merk- of taalvariaties) als aparte producten worden opgeslagen of minder goed scoren behalen in het Levenshtein-algoritme.
+
+
+\subsection{Beperkingen van scraping en anti-botmaatregelen}
+
+De betrouwbaarheid van scraping blijft inherent afhankelijk van de stabiliteit en toegankelijkheid van externe websites. Wijzigingen in HTML-structuren, GraphQL-schema’s of anti-botmaatregelen kunnen ertoe leiden dat spiders tijdelijk falen.
+
+Hoewel het systeem hier architecturaal op voorbereid is (door ontkoppeling via Kafka en foutisolatie), vereist structurele breuk altijd manuele aanpassing van de betrokken spider.
+
+\subsection{Latency en eventual consistency}
+
+Door het gebruik van asynchrone verwerking en achtergrondtaken is het systeem gebaseerd op het principe van \emph{eventual consistency}. Dit betekent dat gebruikers bij een eerste zoekopdracht mogelijk tijdelijk verouderde resultaten zien, terwijl nieuwe data op de achtergrond wordt opgehaald.
+
+Hoewel deze aanpak noodzakelijk is om de gebruikersinterface responsief te houden, introduceert ze een beperkte vertraging tussen data-acquisitie en presentatie.
+
+
+\section{Toekomstige uitbreidingen}
+
+\subsection{Geavanceerde productmatching met machine learning}
+
+Het huidige matching-algoritme is gebaseerd op linguïstische heuristieken en Levenshtein-afstanden. Een mogelijke uitbreiding bestaat uit het toepassen van machine learning-technieken, zoals word embeddings of transformer-gebaseerde taalmodellen, om semantische gelijkenis tussen productnamen beter te capteren.
+
+Dit zou vooral nuttig zijn voor meertalige productnamen en complexere beschrijvingen, maar vereist een voldoende grote en gelabelde dataset.
+
+\subsection{Historische prijsanalyse en trends}
+
+Momenteel bewaart het systeem enkel de meest recente prijs per product en winkel. Door historische prijsgegevens te archiveren, zou het mogelijk worden om prijsfluctuaties te analyseren, trends te visualiseren en gebruikers te informeren over tijdelijke promoties of prijsdalingen.
+
+Dit zou tevens de basis vormen voor voorspellende analyses en geavanceerde gebruikersfunctionaliteiten.
+
+\subsection{Uitbreiding naar extra retailers}
+
+De modulaire scraping-architectuur laat toe om eenvoudig nieuwe retailers toe te voegen door het ontwikkelen van bijkomende spiders. Toekomstig werk kan zich richten op het uitbreiden van het systeem naar andere supermarkten of e-commerceplatformen, mits respect voor hun gebruiksvoorwaarden.
+
+\subsection{Verbeterde caching- en invalidatiestrategieën}
+
+Hoewel het systeem reeds gebruikmaakt van tijdsgebaseerde verversing (stale-after beleid), kan dit verfijnd worden met meer geavanceerde cachingstrategieën. Bijvoorbeeld door prijsgevoelige producten frequenter te verversen of door gebruikersgedrag mee te nemen in de prioritering van scraping-opdrachten.
+
+\subsection{Schaalvergroting en distributie}
+
+Dankzij de containergebaseerde architectuur kan het systeem horizontaal opgeschaald worden door meerdere scraper workers te deployen. Toekomstig werk kan zich richten op load balancing, dynamische worker-scaling en monitoring van scrapingprestaties in een gedistribueerde omgeving.
+
+
+\section{Slotbeschouwing}
+
+Dit project toont aan dat een schaalbaar en robuust prijsvergelijkingssysteem gerealiseerd kan worden door het combineren van web scraping, event-driven architectuur en containerisatie. De besproken beperkingen vormen geen fundamentele tekortkomingen, maar illustreren de complexiteit van real-world data-integratie.
+
+De voorgestelde uitbreidingen bieden een duidelijke roadmap voor verdere verfijning en commercialisatie van het systeem en onderstrepen de praktische relevantie van de gekozen architecturale aanpak.

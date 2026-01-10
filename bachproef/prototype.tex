@@ -1,18 +1,29 @@
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric}
 
-\chapter{\IfLanguageName{dutch}{Prototype}{Prototype}}%
+\chapter{Prototype}%
 \label{ch:prototype}
 
+Dit project werd initieel opgezet als een proof-of-concept om de haalbaarheid van een automatische prijsvergelijker te evalueren. Tijdens de implementatie evolueerde het prototype echter naar een robuust en modulair systeem, met een duidelijke scheiding van verantwoordelijkheden en ondersteuning voor schaalbare dataverwerking. De webscrapingapplicatie is ontworpen met het oog op bruikbaarheid voor een breed publiek — met name studenten — dat niet beschikt over uitgebreide kennis van programmeren of softwareontwikkeling. De gebruiker heeft enkel een internetverbinding nodig en hoeft geen technische configuraties uit te voeren om het systeem te gebruiken.
 
-Het prototype dat in deze bachelorproef werd ontwikkeld, is een proof-of-cooncept van een web scraping applicatie die bruikbaar is voor een breed publiek - met name studenten - dat niet beschikt over uitgebreide kennis van programmeren of softwareontwikkeling. De gebruiker heeft slechts een internetverbinding nodig en hoeft geen technische configuraties uit te voeren.
+Hoewel het project in zijn huidige vorm niet als volledig uitgerolde productieapplicatie kan worden beschouwd, biedt het wel een realistisch en werkbaar kader om inzicht te krijgen in moderne webscrapingarchitecturen. Het gebruik van Docker en een testomgeving maakt het mogelijk om het systeem lokaal te runnen en te experimenteren met de verschillende componenten, wat bijdraagt aan het educatieve karakter van het prototype.
 
-Deze doelstelling impliceert dat de technische complexiteit van web scraping wordt volledig afgeschermd van de eindgebruiker. Interacties met het systeem gebeuren via een eenvoudige en intuïtieve gebruikersinterface, terwijl alle processen zoals het ophalen van webpagina’s, het verwerken van data, het omgaan met anti-scrapingsmechanismen en de opslag van gegevens, achter de schermen verlopen.
+Deze doelstelling impliceert dat de technische complexiteit van web scraping volledig wordt afgeschermd van de eindgebruiker. Interacties met het systeem verlopen via een eenvoudige en intuïtieve gebruikersinterface, terwijl alle onderliggende processen — zoals het ophalen van webpagina’s, het verwerken en normaliseren van data, het omgaan met anti-scrapingmechanismen en de opslag van gegevens — volledig achter de schermen worden afgehandeld.
 
-Het prototype fungeert dus als een laag tussen de gebruiker en de onderliggende scrapingsinfrastructuur, waarbij gebruiksvriendelijkheid en betrouwbaarheid centraal staan.
+
+Het prototype ondersteunt:
+\begin{itemize}
+    \item gebruikersgestuurde productzoekopdrachten
+    \item automatische prijsvergelijking over meerdere supermarkten
+    \item een slimme winkelmandfunctionaliteit
+    \item achtergrondverversing van prijsdata
+    \item fouttolerante scraping van heterogene databronnen
+\end{itemize}
+
+Het prototype fungeert hiermee als een abstraherende laag tussen de gebruiker en de onderliggende scrapingsinfrastructuur. Hoewel het systeem niet perfect is en nog verschillende beperkingen kent, slaagt het er wel in om de kernideeën en doelstellingen van een automatische prijsvergelijker duidelijk te demonstreren. Het project toont aan hoe een dergelijke toepassing kan worden opgebouwd, welke technische uitdagingen daarbij komen kijken en hoe deze op een gestructureerde manier kunnen worden aangepakt.
 
 \section{Keuze van programmeertaal en frameworks}
 
-De keuze van programmeertaal en bijhorende frameworks vormt een essentiële ontwerpbeslissing binnen dit prototype. Literatuur toont aan dat verschillende programmeertalen geschikt zijn voor web scraping, waaronder Python, JavaScript en C\#. Op basis van vergelijkende studies en best practices \autocite{5BestLang, StateofArt, BestPractice2025, PvsJS} is Python gekozen als primaire programmeertaal voor het prototype.
+De keuze van programmeertaal en bijhorende frameworks vormt een essentiële ontwerpbeslissing binnen dit prototype. Literatuur toont aan dat verschillende programmeertalen geschikt zijn voor web scraping, waaronder Python, JavaScript en C\#. Op basis van vergelijkende studies en best practices \autocite{BestPractice2025, PvsJS} is Python gekozen als primaire programmeertaal voor het prototype.
 
 Deze keuze voor Python kan gemotiveerd worden door meerdere factoren. Ten eerste beschikt Python over een uitgebreid ecosysteem van bibliotheken die specifiek ontworpen zijn voor interactie met de inhoud van websites, zoals \textit{Requests}, \textit{BeautifulSoup}, \textit{Scrapy} en \textit{Playwright}. Hierdoor kan snel en efficiënt worden ingespeeld op uiteenlopende scrapingsuitdagingen, variërend van eenvoudige HTML-pagina’s tot complexe, dynamisch gegenereerde webinhoud. 
 Ten tweede is Python relatief eenvoudig aan te leren, wat het bijzonder geschikt maakt voor beginnende ontwikkelaars en studenten. De leesbaarheid van de syntaxis en de grote hoeveelheid beschikbare documentatie en voorbeelden verlagen de instapdrempel aanzienlijk. Dit sluit aan bij de doelstelling van dit prototype, namelijk het ontwikkelen van een systeem dat toegankelijk is voor gebruikers zonder diepgaande programmeerkennis.
@@ -38,14 +49,7 @@ De combinatie van Python, Scrapy, Kafka, Django en Docker resulteert in een cohe
 
 \section{Klassieke web scraping pijplijn}
 
-De structuur van web scraping systemen wordt in de literatuur vaak beschreven als een opeenvolging van afzonderlijke verwerkingsstappen. \autocite{Laender2002} en \autocite{StateofArt} beschrijven web data extractie als een pijplijn bestaande uit meerdere logisch gescheiden fasen:
-
-\begin{itemize}
-    \item selectie van databronnen;
-    \item extractie van ruwe data;
-    \item transformatie en normalisatie;
-    \item integratie en opslag.
-\end{itemize}
+De structuur van web scraping systemen wordt in de literatuur vaak beschreven als een opeenvolging van afzonderlijke verwerkingsstappen. \autocite{Laender2002} beschrijft web data extractie als een pijplijn bestaande uit meerdere logisch gescheiden fasen: selectie van databronnen, extractie van ruwe data, transformatie en normalisatie, integratie en opslag.
 
 Deze architecturale scheiding verhoogt de onderhoudbaarheid van het systeem en maakt hergebruik en schaalbaarheid mogelijk. Het prototype volgt deze pijplijnstructuur expliciet.
 Op basis van de overleg met de co-promotor en de besproken state-of-the-art werd een modulaire architectuur voorgesteld. Deze architectuur is weergegeven in Figuur~\ref{fig:architectuur_overzicht}.
@@ -61,30 +65,32 @@ Op basis van de overleg met de co-promotor en de besproken state-of-the-art werd
     \centering
     \begin{tikzpicture}[
         font=\small,
-        node distance=1.5cm and 2.0cm,
-        box/.style={draw, rounded corners, align=center, minimum width=3.6cm, minimum height=1.1cm},
-        smallbox/.style={draw, rounded corners, align=center, minimum width=3.1cm, minimum height=0.95cm},
+        box/.style={draw, rounded corners, align=center, text width=3.6cm, minimum height=1.1cm},
+        smallbox/.style={draw, rounded corners, align=center, text width=3.1cm, minimum height=0.95cm},
         arrow/.style={-Latex, thick}
         ]
+        % --- Grid coordinates (tune dx/dy if needed) ---
+        \def\dx{4.9}   % column spacing
+        \def\dy{2.5}   % row spacing
         
-        % Left: User + Django
-        \node[box] (user) {Gebruiker\\(zoekopdracht)};
-        \node[box, below=of user] (django) {Django webapp\\Search endpoint};
+        % Left column
+        \node[box] (user)   at (0,  \dy) {Gebruiker\\(zoekopdracht)};
+        \node[box] (django) at (0, 0)    {Django webapp\\Search endpoint};
         
-        % Kafka topics
-        \node[box, right=3.0cm of django] (kafka_jobs) {Kafka topic\\\texttt{scrape\_jobs}};
-        \node[box, below=of kafka_jobs] (kafka_items) {Kafka topic\\\texttt{scraped\_items}};
+        % Middle-left column (Kafka)
+        \node[box] (kafka_jobs)  at (\dx, 0)   {Kafka topic\\\texttt{scrape\_jobs}};
+        \node[box] (kafka_items) at (\dx,-\dy) {Kafka topic\\\texttt{scraped\_items}};
         
-        % Worker + spiders
-        \node[box, right=3.0cm of kafka_jobs] (worker) {Scraper worker\\(\texttt{scraper\_worker.py})};
-        \node[box, below=of worker] (spiders) {Scrapy spiders\\AH / Carrefour / Colruyt\\(Playwright waar nodig)};
+        % Middle-right column (worker/spiders)
+        \node[box] (worker)  at (2*\dx, 0)   {Scraper worker\\(\texttt{scraper\_worker.py})};
+        \node[box] (spiders) at (2*\dx,-\dy) {Scrapy spiders\\AH / Carrefour / Colruyt\\(Playwright waar nodig)};
         
-        % Normalizer + DB
-        \node[box, right=3.0cm of kafka_items] (normalizer) {Normalizer service\\(\texttt{normalizer.py})};
-        \node[box, below=of normalizer] (db) {PostgreSQL\\(Shop, Product, ShopProduct)};
+        % Right column (normalizer/db)
+        \node[box] (normalizer) at (3*\dx,-\dy) {Normalizer service\\(\texttt{normalizer.py})};
+        \node[box] (db)         at (3*\dx,-2*\dy) {PostgreSQL\\(Shop, Product, ShopProduct)};
         
-        % Scheduler (nightly)
-        \node[smallbox, above=of kafka_jobs] (scheduler) {Scheduler\\(\texttt{scheduler.py})\\Nightly refresh};
+        % Scheduler above kafka_jobs
+        \node[smallbox] (scheduler) at (\dx, \dy) {Scheduler\\(\texttt{scheduler.py})\\Nightly refresh};
         
         % Arrows
         \draw[arrow] (user) -- (django);
@@ -100,38 +106,88 @@ Op basis van de overleg met de co-promotor en de besproken state-of-the-art werd
         \draw[arrow] (db) -| (django);
         
     \end{tikzpicture}
+
     \caption{Event-driven scraping pipeline: Django publiceert scrape-jobs naar Kafka; de scraper worker voert spiders uit; resultaten worden genormaliseerd en opgeslagen in de database.}
     \label{fig:architectuur_overzicht}
 \end{figure}
 
 
-De architectuur bestaat uit vijf hoofdlagen:
+
+
+De architectuur van het project bestaat uit vijf hoofdlagen:
 \begin{enumerate}
-    \item \textbf{Gebruikersinterface (Django)}
-    \item \textbf{Scrapinglaag (Scrapy spiders)}
-    \item \textbf{Opslag van ruwe data (Kafka topics)}
-    \item \textbf{Transformatielaag (Normalizer)}
-    \item \textbf{Gestructureerde databank (PostgreSQL)}
+    \item Gebruikersinterface (Django)
+    \item Scrapinglaag (Scrapy spiders)
+    \item Ruwe datalaag (Kafka topics)
+    \item Transformatielaag (Normalizer)
+    \item Persistente databank (PostgreSQL)
 \end{enumerate}
 
-Figuur~\ref{fig:architectuur_overzicht2}.
+Figuur~\ref{fig:architectuur_overzicht2} toont een alternatief visueel overzicht van dezelfde lagen.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{scheme.jpg}
-\caption{Overzicht van de voorgestelde prototype-architectuur}
-\label{fig:architectuur_overzicht2}
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=0.9\textwidth]{scheme.jpg}
+%\caption{Overzicht van de voorgestelde prototype-architectuur}
+%\label{fig:architectuur_overzicht2}
+%\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        font=\small,
+        box/.style={
+            draw, rounded corners, align=center,
+            text width=3.6cm, minimum height=1.1cm
+        },
+        oval/.style={
+            draw, ellipse, align=center,
+            text width=3.2cm, minimum height=1.1cm
+        },
+        arrow/.style={-Latex, thick}
+        ]
+        
+        % --- Vertical spacing ---
+        \def\dy{2.4}
+        \def\dx{4.6}
+        
+        % --- Top: pacer / trigger ---
+        \node[oval] (pacer) at (\dx, 2*\dy)
+        {scheduler/\\gebruiker/\\Kafka job};
+        
+        % --- Bottom red area (scrape zone) ---
+        \node[oval] (website) at (0, 0)
+        {Website\\HTML};
+        
+        \node[oval] (raw) at (2*\dx, 0)
+        {Scrapen (ruwe data)};
+        
+        % --- Transform ---
+        \node[oval] (transform) at (\dx, 0)
+        {Normaliseren};
+        
+        % --- Arrows ---
+        \draw[arrow] (pacer) -- (raw);
+        \draw[arrow] (raw) --  (transform);
+        \draw[arrow] (transform) -- (website);
+
+        
+    \end{tikzpicture}
+    \caption{Overzicht van de voorgestelde prototype-architectuur}
+    \label{fig:architectuur_overzicht2}
 \end{figure}
+
 
 \section{Gebruikersinterface}
 
 De gebruikersinterface vormt het enige directe contactpunt tussen de gebruiker en het systeem. Via deze interface kan de gebruiker producten opzoeken of een lijst van producten invoeren die vergeleken moeten worden over meerdere supermarkten. De gebruiker heeft geen zicht op, noch controle over, de onderliggende scraping- en verwerkingslogica; deze wordt volledig door het systeem afgehandeld.
 
-De implementatie van de gebruikersinterface is gebaseerd op het Django-framework, dat fungeert als centrale coördinatielaag tussen de frontend, de databank en de asynchrone scraping-infrastructuur. Django beslist op basis van bestaande data of een scraping-opdracht noodzakelijk is en fungeert daarbij als Kafka-producer. Indien data ontbreekt of verouderd is, publiceert Django een bericht naar het Kafka-topic \texttt{scrape\_jobs}. De verdere verwerking verloopt volledig asynchroon en zonder blokkering van de webserver.
+De implementatie van de gebruikersinterface is gebaseerd op het Django-framework, dat fungeert als centrale coördinatielaag tussen de frontend, de databank en de asynchrone scraping-infrastructuur. 
 
 \subsection{Rol van Django binnen het systeem}
 
-Binnen dit project vervult Django een dubbele rol. Enerzijds verzorgt het framework de presentatie van gegevens via HTML-pagina’s en API-endpoints, anderzijds fungeert het als orkestrator die scraping-opdrachten initieert en de levenscyclus van zoekopdrachten bewaakt. Django vormt hiermee het centrale knooppunt van het systeem.
+Binnen dit project vervult Django een dubbele rol. Enerzijds verzorgt het framework de presentatie van gegevens via HTML-pagina’s en API-endpoints, anderzijds fungeert het als orkestrator die scraping-opdrachten initieert en de levenscyclus van zoekopdrachten bewaakt. Django is hierbij niet louter een presentatiecomponent, maar beheert actief de levenscyclus van zoekopdrachten. Django beslist op basis van bestaande data of een scraping-opdracht noodzakelijk is en fungeert daarbij als Kafka-producer. Indien data ontbreekt of verouderd is, publiceert Django een bericht naar het Kafka-topic \texttt{scrape\_jobs}. De verdere verwerking verloopt volledig asynchroon en zonder blokkering van de webserver.
+
 
 \subsection{Data-architectuur en modellering}
 
@@ -182,6 +238,8 @@ Naast HTML-pagina’s voorziet de applicatie een REST API waarmee de frontend (o
 
 \subsection{Statusmodellering en gebruikersfeedback}
 
+Wanneer een gebruiker een zoekopdracht uitvoert, wordt eerst de databank geraadpleegd op bestaande resultaten. Indien deze resultaten ontbreken of als verouderd worden beschouwd (ouder dan 24 uur), publiceert Django automatisch een scraping-opdracht naar Kafka.
+
 Om transparantie te bieden aan de gebruiker maakt de interface gebruik van expliciete statussen:
 
 \begin{center}
@@ -189,19 +247,24 @@ Om transparantie te bieden aan de gebruiker maakt de interface gebruik van expli
         \hline
         \textbf{Status} & \textbf{Betekenis} & \textbf{Systeemactie} \\
         \hline
-        \texttt{ok} & Data is actueel & Resultaten worden direct weergegeven \\
-        \texttt{queued} & Data ontbreekt of is verouderd & Scraping-opdracht wordt gestart \\
+        \texttt{gereed} & Data is actueel & Resultaten worden direct weergegeven \\
+        \texttt{in wachtrij} & Data ontbreekt of is verouderd & Scraping-opdracht wordt gestart \\
         \hline
     \end{tabular}
 \end{center}
 
+Hierdoor ervaart de gebruiker steeds een snelle respons met al opgeslagen data, ongeacht de duur van de achterliggende scraping.
+
 \subsection{Conclusie}
 
-De Django-gebaseerde gebruikersinterface functioneert als een toestandsgestuurde coördinatielaag die de volledige levenscyclus van een zoekopdracht beheert. Door het combineren van caching, asynchrone verwerking en duidelijke gebruikersfeedback slaagt het systeem erin om zowel actuele prijsinformatie als een snelle en responsieve gebruikerservaring te bieden.
+De Django-gebaseerde gebruikersinterface functioneert als een toestand gedreven coördinatielaag die de volledige levenscyclus van een zoekopdracht beheert. Door het combineren van caching, asynchrone verwerking en duidelijke gebruikersfeedback slaagt het systeem erin om zowel actuele prijsinformatie als een snelle en responsieve gebruikerservaring te bieden.
 
 
 
 \section{Scrapinglaag}
+
+\subsection{Scrapy}
+Scrapy is een snel en krachtig Python-framework voor webscraping \cite{ScrapyDocs}. Het stelt je in staat om crawlers (spiders) te bouwen die efficiënt gestructureerde data (zoals productinformatie en prijzen) van websites extraheren door pagina's op te halen, HTML/XML te parsen (met behulp van selectors zoals XPath/CSS) en de resultaten te exporteren (CSV, JSON). Het framework verwerkt grootschalige crawling asynchroon, waardoor het uitstekend geschikt is voor data mining, monitoring en automatisering.
 
 \subsection{Algemene ontwikkelingsmethodologie van de spiders}
 
@@ -210,31 +273,31 @@ De ontwikkeling van elke scraper binnen dit project volgde een systematische en 
 \paragraph{Analyse van HTML-structuren}
 De eerste stap in de ontwikkeling van elke spider bestond uit het analyseren van de HTML-structuur van de zoekresultaatpagina’s. Met behulp van browserontwikkeltools werden DOM-elementen geïnspecteerd om te bepalen waar productinformatie zich bevindt en of deze server-side dan wel client-side wordt gerenderd. Hierbij werd specifiek gekeken naar herhaalbare HTML-blokken (zoals productkaarten), consistente CSS-klassen en data-attributen die gebruikt worden voor identificatie en tracking.
 
-Volgens Mitchell (2018) vormt DOM-analyse de fundamentele basis van HTML-gebaseerde web scraping, omdat stabiele en semantisch betekenisvolle structuren doorgaans minder frequent wijzigen dan visuele layout-elementen \autocite{mitchell2018webscraping}. Deze observatie werd bevestigd bij de implementatie van de Carrefour spider, waar server-side gerenderde HTML voldoende stabiel bleek voor klassieke parsing met CSS-selectors.
+Volgens \autocite{Mitchell2018} vormt DOM-analyse de fundamentele basis van HTML-gebaseerde web scraping, omdat stabiele en semantisch betekenisvolle structuren doorgaans minder frequent wijzigen dan visuele layout-elementen . Deze observatie werd bevestigd bij de implementatie van de Carrefour spider, waar server-side gerenderde HTML voldoende stabiel bleek voor klassieke parsing met CSS-selectors.
 
 \paragraph{Inspectie van netwerkverkeer}
 Wanneer HTML-analyse wees op beperkte of ontbrekende data in de initiële DOM, werd de aandacht verlegd naar netwerkverkeer. Via het Network-tabblad van browserontwikkeltools werden HTTP-requests geanalyseerd die uitgevoerd worden bij het laden van zoekresultaten of bij interacties zoals paginatie en scrollen.
 
-Deze stap maakte het mogelijk om verborgen API-aanroepen te identificeren, zoals JSON- of GraphQL-endpoints die productdata rechtstreeks leveren. Dit bleek cruciaal bij de ontwikkeling van de Albert Heijn spider, waar productinformatie niet primair in HTML aanwezig was, maar via een GraphQL-endpoint werd aangeleverd. Het benutten van dergelijke endpoints sluit aan bij aanbevelingen uit de literatuur, waar wordt gesteld dat directe communicatie met backend-API’s robuuster en efficiënter is dan HTML-parsing indien beschikbaar \autocite{almeida2020api}.
+Deze stap maakte het mogelijk om verborgen API-aanroepen te identificeren, zoals JSON- of GraphQL-endpoints die productdata rechtstreeks leveren. Dit bleek cruciaal bij de ontwikkeling van de Albert Heijn spider, waar productinformatie niet primair in HTML aanwezig was, maar via een GraphQL-endpoint werd aangeleverd. Het benutten van dergelijke endpoints sluit aan bij aanbevelingen uit de literatuur, waar wordt gesteld dat directe communicatie met backend-API’s robuuster en efficiënter is dan HTML-parsing indien beschikbaar \autocite{Almeida2020}.
 
 \paragraph{Analyse van request- en responsepatronen}
-Naast het identificeren van endpoints werd ook aandacht besteed aan request headers, HTTP-methodes en payloadstructuren. Door deze parameters correct te repliceren (zoals \texttt{Content-Type}, \texttt{Origin} en \texttt{Referer}) konden requests succesvol nagebootst worden als regulier browserverkeer. Dit verkleint de kans op detectie door eenvoudige anti-botmechanismen en verhoogt de betrouwbaarheid van de scraper \autocite{zhao2021antibot}.
+Naast het identificeren van endpoints werd ook aandacht besteed aan request headers, HTTP-methodes en payloadstructuren. Door deze parameters correct te repliceren (zoals \texttt{Content-Type}, \texttt{Origin} en \texttt{Referer}) konden requests succesvol nagebootst worden als regulier browserverkeer. Dit verkleint de kans op detectie door eenvoudige anti-botmechanismen en verhoogt de betrouwbaarheid van de scraper \autocite{Zhao2021}.
 
 \paragraph{Detectie van client-side rendering}
 Wanneer noch HTML-parsing noch directe API-aanroepen voldoende data opleverden, werd vastgesteld dat de website afhankelijk is van client-side JavaScript-rendering. In dergelijke gevallen werd een headless browser ingezet om de pagina volledig te renderen alvorens data-extractie plaatsvond. Dit scenario deed zich voor bij Colruyt, waar productkaarten pas na uitvoering van JavaScript en interne API-calls beschikbaar waren.
 
-Onderzoek toont aan dat moderne e-commerceplatformen steeds vaker client-side rendering combineren met anti-botmaatregelen, waardoor headless browsers zoals Playwright of Puppeteer noodzakelijk worden voor betrouwbare scraping \autocite{li2022dynamic}.
+Onderzoek toont aan dat moderne e-commerceplatformen steeds vaker client-side rendering combineren met anti-botmaatregelen, waardoor headless browsers zoals Playwright of Puppeteer noodzakelijk worden voor betrouwbare scraping \autocite{Li2022}.
 
 \paragraph{Iteratieve validatie en verfijning}
-De analysefase werd iteratief herhaald tijdens de ontwikkeling. Wijzigingen in frontendgedrag, time-outs of blokkades leidden tot hernieuwde inspectie van netwerkverkeer en DOM-structuren. Deze feedbackloop maakte het mogelijk om scraping-logica incrementeel te verbeteren en aan te passen aan veranderende omstandigheden, wat essentieel is voor scraping in productieomgevingen \autocite{olston2010web}.
+De analysefase werd iteratief herhaald tijdens de ontwikkeling. Wijzigingen in frontendgedrag, time-outs of blokkades leidden tot hernieuwde inspectie van netwerkverkeer en DOM-structuren. Deze feedbackloop maakte het mogelijk om scraping-logica incrementeel te verbeteren en aan te passen aan veranderende omstandigheden, wat essentieel is voor scraping in productieomgevingen \autocite{Olston2010}.
 
 
 
 \subsection{Initiële aanpak en beperkingen}
 
 In een eerste experimentele fase werd gebruikgemaakt van de combinatie \textit{Requests} en \textit{BeautifulSoup}. Hoewel deze aanpak eenvoudig te implementeren is, bleek ze in de praktijk onvoldoende robuust.
-Tijdens tests werden meerdere HTTP-foutcodes waargenomen, waaronder: 403 (Forbidden), 456 (Quota exceeded).
-Bovendien werd vastgesteld dat bepaalde websites, zoals Carrefour, gebruikmaken van Cloudflare om niet-menselijk verkeer te detecteren en te blokkeren Figuur~\ref{fig:blocked}.
+Tijdens tests werden meerdere HTTP-foutcodes waargenomen, waaronder 403 (Forbidden), 456 (Quota exceeded).
+Bovendien werd vastgesteld dat bepaalde websites, zoals Carrefour, gebruikmaken van Cloudflare om niet-menselijk verkeer te detecteren en te blokkeren met boodschappen zoals te zien in Figuur~\ref{fig:blocked}.
 
 \begin{figure}[h]
     \centering
@@ -246,14 +309,14 @@ Bovendien werd vastgesteld dat bepaalde websites, zoals Carrefour, gebruikmaken 
 \subsection{Overstap naar Scrapy en Playwright}
 
 Op advies van de co-promotor werd overgestapt naar het Scrapy-framework. Scrapy biedt uitgebreide mogelijkheden voor request scheduling, foutafhandeling en data-extractie, en is gebaseerd op een asynchrone, event-gedreven architectuur. Door het scrapingproces te mogen isoleren en als een afzonderlijke service of proces uit te voeren, wordt het systeem beter bestand tegen fouten en netwerkproblemen. Hierdoor blijft de rest van de applicatie operationeel, zelfs wanneer scraping taken falen of tijdelijk onderbroken worden. 
-Daarnast om detectie te vermijden, wordt gebruikgemaakt van \textit{scrapy-impersonate}, waarmee browserheaders en gebruikersgedrag geïmiteerd kunnen worden. Voor websites met dynamische content werd Scrapy gecombineerd met Playwright, zodat JavaScript-elementen correct kunnen worden geladen.
+Daarnaast om detectie te vermijden, wordt gebruikgemaakt van \textit{scrapy-impersonate}, waarmee browserheaders en gebruikersgedrag geïmiteerd kunnen worden. Voor websites met dynamische content werd Scrapy gecombineerd met Playwright, zodat JavaScript-elementen correct kunnen worden geladen.
 
 \subsection{Website-specifieke scrapingstrategieën}
 
 Voor de verschillende webshops werden specifieke scrapingstrategieën toegepast:
 
 \begin{itemize}
-    \item \textbf{Albert Heijn}: data wordt opgehaald via de GraphQL-API, waarbij JSON-responses rechtstreeks worden verwerkt \autocite{AHGraphQL}.
+    \item \textbf{Albert Heijn}: data wordt opgehaald via de GraphQL-API, waarbij JSON-responses worden gekregen.
     \item \textbf{Carrefour}: HTML-scraping met Scrapy en browser-imitatie.
     \item \textbf{Colruyt}: scraping met Scrapy in combinatie met Playwright om JavaScript-gegenereerde content te laden.
 \end{itemize}
@@ -272,26 +335,87 @@ Bij ontvangst van een job:
 \end{enumerate}
 
 Door deze centrale coördinatie wordt vermeden dat meerdere workers dezelfde scraping-taak gelijktijdig uitvoeren.
+\begin{lstlisting}[language=Python, caption={Kafka consumer loop in \texttt{scraper\_worker.py} (vereenvoudigd)}, label={lst:scraper_worker_loop}]
+consumer = KafkaConsumer(
+    TOPIC,
+    bootstrap_servers=BOOTSTRAP,
+    group_id=GROUP_ID,
+    enable_auto_commit=False,
+    auto_offset_reset="earliest",
+    value_deserializer=lambda b: json.loads(b.decode("utf-8")),
+    consumer_timeout_ms=1000,
+    max_poll_records=1,
+)
 
-subsubsection{\texttt{run\_spiders.py} — Procesisolatie}
+for msg in consumer:
+    job = msg.value or {}
+    query = (job.get("query") or "").strip()
+    if not query:
+        consumer.commit()
+        continue
+
+    try:
+        run_all(query)      # start spiders
+        consumer.commit()   # ack job
+    except Exception:
+        # don't commit -> retry
+        time.sleep(5)
+\end{lstlisting}
+
+
+\subsubsection{\texttt{run\_spiders.py} — Procesisolatie}
 
 Scrapy maakt gebruik van de Twisted reactor, die niet opnieuw kan worden gestart binnen hetzelfde proces. Om dit probleem te vermijden lanceert \texttt{run\_spiders.py} alle spiders in een afzonderlijk multiprocessing-proces.
 
 Deze aanpak:
-\begin{itemize}
-    \item voorkomt reactor-gerelateerde crashes;
-    \item verhoogt de stabiliteit van de worker;
-    \item laat toe om falende spiders te isoleren.
-\end{itemize}
+\begin{lstlisting}[language=Python, caption={Procesisolatie voor Scrapy/Twisted in \texttt{run\_spiders.py} (vereenvoudigd)}, label={lst:run_spiders_mp}]
+def _run_crawler_process(query: str):
+    settings = get_project_settings()
+    process = CrawlerProcess(settings)
+    process.crawl(AHSpider, query=query)
+    process.crawl(CarrefourSpider, query=query)
+    process.crawl(ColruytSpider, query=query)
+    process.start()
+
+def run_all(query: str):
+    p = multiprocessing.Process(target=_run_crawler_process, args=(query,))
+    p.start()
+    p.join()
+\end{lstlisting}
+
+Het voorkomt reactor-gerelateerde crashes, verhoogt de stabiliteit van de worker, laat toe om falende spiders te isoleren.
 
 \subsection{Albert Heijn (AH)}
 
 \subsubsection{Implementatie van een GraphQL-gebaseerde scraper}
 
-In tegenstelling tot webshops die voornamelijk HTML-rendering gebruiken, biedt Albert Heijn productzoekresultaten aan via een GraphQL-laag. Om deze data op een stabiele en performante manier te verzamelen, werd een Scrapy spider geïmplementeerd die rechtstreeks communiceert met het GraphQL-endpoint van AH via HTTP POST requests.
+In tegenstelling tot webshops die voornamelijk HTML-rendering gebruiken, biedt Albert Heijn productzoekresultaten aan via een GraphQL-laag. Om deze data op een stabiele en performante manier te verzamelen, werd een Scrapy spider geïmplementeerd die rechtstreeks communiceert met het GraphQL-endpoint van AH via HTTP POST requests. De inspiratie voor deze aanpak werd gevonden in een bestaande repository \autocite{AHGraphQL}.
 
 \paragraph{GraphQL-query als contract voor data-extractie}
-De spider maakt gebruik van een vaste GraphQL-query (\texttt{PRODUCT\_SEARCH}) die in een hulpfunctiebestand werd ondergebracht. Deze query definieert expliciet welke velden nodig zijn voor het prijsvergelijkingsplatform, waaronder paginatie-informatie en essentiële productvelden zoals titel, merk, prijs en eenheidsprijs. De query werd als string-template geïmplementeerd, waarbij de gebruikerszoekterm dynamisch ingevuld wordt (\texttt{"\%s"}). Dit maakt het mogelijk om met dezelfde query-structuur verschillende zoekopdrachten uit te voeren. (Zie \texttt{scripts/util.py}.)
+De spider maakt gebruik van een vaste GraphQL-query (\texttt{PRODUCT\_SEARCH}) die in een hulpfunctiebestand werd ondergebracht.
+\begin{lstlisting}[language=Python, caption={GraphQL zoekquery voor Albert Heijn (\texttt{PRODUCT\_SEARCH})}, label={lst:ah_graphql_query}]
+PRODUCT_SEARCH = """
+query {
+  productSearch(input: {query: "%s"}) {
+    page { pageSize pageNumber totalPages totalElements }
+    products {
+      id
+      brand
+      title
+      summary
+      price {
+        now { amount formatted }
+        unitInfo {
+          price { amount formatted }
+          description
+        }
+      }
+    }
+  }
+}
+"""
+\end{lstlisting}
+ Deze query definieert expliciet welke velden nodig zijn voor het prijsvergelijkingsplatform, waaronder paginatie-informatie en essentiële productvelden zoals titel, merk, prijs en eenheidsprijs. De query werd als string-template geïmplementeerd, waarbij de gebruikerszoekterm dynamisch ingevuld wordt (\texttt{"\%s"}). Dit maakt het mogelijk om met dezelfde query-structuur verschillende zoekopdrachten uit te voeren. (Zie \texttt{scripts/util.py}.)
 
 \paragraph{Request-opbouw en communicatie met het endpoint}
 De effectieve scraping gebeurt door het versturen van een POST request naar het GraphQL-endpoint van AH, met als body een JSON payload waarin de query-string wordt meegegeven. De spider voorziet daarnaast specifieke HTTP headers zoals \texttt{Content-Type}, \texttt{Accept}, \texttt{Origin} en \texttt{Referer}. Dit zorgt ervoor dat het request voldoende lijkt op normaal browsergedrag en verhoogt de slaagkans in een productieomgeving. (Zie \texttt{scripts/ah\_spider.py}.) 
@@ -308,8 +432,8 @@ De response van het endpoint bevat JSON-data met een vaste structuur: \texttt{da
 Deze velden vormen de basis voor verdere normalisatie en opslag downstream in de pipeline. (Zie \texttt{scripts/ah\_spider.py}.)
 
 \paragraph{Waarom GraphQL (en hoe het schema werd bepaald)}
-Een praktisch voordeel van GraphQL is dat de client precies kan opvragen welke velden nodig zijn, zonder bijkomende HTML-parsing of meerdere REST-calls. Om de beschikbare queries en datavelden van AH te achterhalen, werd gebruikgemaakt van schema-visualisatie via GraphQL Voyager \autocite{AHGraphQLSchema} gevonden in de repository \autocite{AHGraphQL}
-Daarnaast werd het reverse-engineering proces ondersteund door bestaande documentatie en voorbeeldimplementaties uit een open-source repository die het AH GraphQL-schema via introspection beschrijft en illustreert. :contentReference[oaicite:4]{index=4}
+Een praktisch voordeel van GraphQL is dat de client precies kan opvragen welke velden nodig zijn, zonder bijkomende HTML-parsing of meerdere REST-calls. Om de beschikbare queries en datavelden van AH te achterhalen, werd gebruikgemaakt van schema-visualisatie via GraphQL Voyager gevonden in de repository \autocite{AHGraphQL}
+Daarnaast werd het reverse-engineering proces ondersteund door bestaande documentatie en voorbeeldimplementaties uit een open-source repository die het AH GraphQL-schema via introspection beschrijft en illustreert.
 
 \paragraph{Robuustheid en anti-bot overwegingen}
 Hoewel deze spider geen headless browser nodig heeft, werd wel rekening gehouden met anti-botmaatregelen. Daarom gebruikt de spider Scrapy-instellingen die typische browser fingerprinting beperken, zoals het gebruik van \texttt{scrapy\_impersonate} middleware en het uitschakelen van een vaste \texttt{USER\_AGENT}. Dit verhoogt de betrouwbaarheid van requests naar het endpoint. (Zie \texttt{scripts/ah\_spider.py}.)
@@ -323,7 +447,7 @@ Door rechtstreeks met het GraphQL-endpoint te communiceren, vermijdt de AH scrap
 
 In tegenstelling tot Albert Heijn, waar productgegevens via een GraphQL-endpoint beschikbaar zijn, presenteert Carrefour zijn zoekresultaten hoofdzakelijk als server-side gerenderde HTML-pagina’s. Om deze data betrouwbaar te extraheren werd een Scrapy spider ontwikkeld die gebruikmaakt van klassieke HTML-parsing via CSS-selectors, aangevuld met browser-impersonatie om anti-botmaatregelen te omzeilen.
 
-De implementatie van deze spider bevindt zich in \texttt{carrefour\_spider.py}. :contentReference[oaicite:0]{index=0}
+De implementatie van deze spider bevindt zich in \texttt{carrefour\_spider.py}.
 
 
 \paragraph{Zoekgebaseerde URL-opbouw en paginatie}
@@ -361,7 +485,7 @@ Per productkaart worden relevante velden geëxtraheerd via CSS-selectors, waaron
     \item bron-URL en timestamp.
 \end{itemize}
 
-De eenheidsprijs wordt bijkomend genormaliseerd via een hulpfunctie (\texttt{price\_per\_kg\_extractor}), die numerieke waarden extraheert uit tekstuele prijsstrings. Numerieke conversies worden afgehandeld via een robuuste \texttt{parse\_decimal}-functie om fouten door locale-specifieke notaties (komma versus punt) te vermijden. (Zie \texttt{util.py}.) :contentReference[oaicite:1]{index=1}
+De eenheidsprijs wordt bijkomend genormaliseerd via een hulpfunctie (\texttt{price\_per\_kg\_extractor}), die numerieke waarden extraheert uit tekstuele prijsstrings. Numerieke conversies worden afgehandeld via een robuuste \texttt{parse\_decimal}-functie om fouten door locale-specifieke notaties (komma versus punt) te vermijden. (Zie \texttt{util.py}.)
 
 
 \paragraph{Fouttolerantie en logging}
@@ -402,7 +526,7 @@ Hoewel deze aanpak functioneel correct was, bleek ze ongeschikt voor stabiele sc
 Tijdens testen en deployment werden meerdere structurele problemen vastgesteld:
 
 \paragraph{Timeout}
-Tijdens scraping van Colruyt trad sporadisch een \texttt{playwright.\_impl.\_errors.TimeoutError} bij de initeele scrape of op bij paginatie (bv. pagina 2 voor zoekterm ``ijs''). Dit werd veroorzaakt doordat de Colruyt-website achtergrondprocessen en tracking-API’s laadt die traag reageren of soms nooit afronden, waardoor het \texttt{load}-event niet wordt bereikt. Daarnaast de fout ontstond in de Playwright-integratie wanneer expliciet werd gewacht tot de productkaarten \emph{zichtbaar} waren: \texttt{Page.wait\_for\_selector("a.card--article[data-tms-product-id]")} met een time-out van 45 seconden. Wat was in de browser te zien is \ref{fig:colruyt_loading}.
+Tijdens scraping van Colruyt trad sporadisch een \texttt{playwright.\_impl.\_errors.TimeoutError} op, zowel bij de initiële scrape als bij paginatie (bv. pagina 2 voor zoekterm ``ijs''). Dit werd veroorzaakt doordat de Colruyt-website achtergrondprocessen en tracking-API’s laadt die traag reageren of soms nooit afronden, waardoor het \texttt{load}-event niet wordt bereikt. Daarnaast de fout ontstond in de Playwright-integratie wanneer expliciet werd gewacht tot de productkaarten \emph{zichtbaar} waren: \texttt{Page.wait\_for\_selector("a.card--article[data-tms-product-id]")} met een time-out van 45 seconden. Dit is visueel waarneembaar in Figuur~\ref{fig:colruyt_loading}.
 In dergelijke gevallen is de pagina wel geladen, maar blijven productkaarten onzichtbaar door trage JavaScript-rendering, overlays (cookie banner) of anti-bot interventies, waardoor de zichtbaarheid-conditie niet wordt voldaan.
 
 \begin{figure}[h]
@@ -433,7 +557,7 @@ Bij elke nieuwe pagina verscheen een cookie consent overlay \ref{fig:colruyt_loa
 In sommige gevallen rapporteerde Playwright dat de pagina geladen was, terwijl productkaarten slechts als skeleton placeholders aanwezig waren omdat interne JavaScript-logica nog niet voltooid was.
 
 \paragraph{Volgende pagina scraping}
-Om alle gevonden producten te kunnen scrapen moeten er alle paginas geladen en gescraped worden. Om dat te kunnen doen worden er twee benaderingen gebruikt: 1. Er wordt de aantal van gevonden producten gelezen uit HTML blok \texttt{promo-filters\_\_overview} die op \ref{fig:colruyt_products} wordt getoond. 2. Er wordt gekeken of er een knop ''Meer bekijken'' staat die te zien is op \ref{fig:colruyt_next_page}. Als die niet gevonden is, dan betekent het voor Colruyt spider en voor een gebruiker dat het de laatste pagina met de producten gefiltert met gevraagde produuct naam.
+Om alle gevonden producten te kunnen scrapen moeten er alle paginas geladen en gescraped worden. Om dit te ondersteunen werden twee benaderingen gecombineerd: 1. Er wordt de aantal van gevonden producten gelezen uit HTML blok \texttt{promo-filters\_\_overview} die op \ref{fig:colruyt_products} wordt getoond. 2. Er wordt gekeken of er een knop ''Meer bekijken'' staat die te zien is op \ref{fig:colruyt_next_page}. Als die niet gevonden is, dan betekent het voor Colruyt spider en voor een gebruiker dat het de laatste pagina met de producten gefilterdert met gevraagde product naam.
 
 \begin{figure}[h]
     \centering
@@ -454,6 +578,24 @@ Om alle gevonden producten te kunnen scrapen moeten er alle paginas geladen en g
 \paragraph{1. Geoptimaliseerde navigatiestrategie}
 
 De navigatiestrategie werd aangepast door expliciet te wachten op \texttt{domcontentloaded} in plaats van het \texttt{load}-event. Dit werd gerealiseerd via een aangepaste Playwright-configuratie in de spider (\texttt{custom\_settings}):
+\begin{lstlisting}[language=Python, caption={Playwright PageMethods in de Colruyt spider (uittreksel)}, label={lst:colruyt_pagemethods}]
+yield scrapy.Request(
+    url,
+    headers=self.HEADERS,
+    callback=self.parse,
+    meta={
+        "playwright": True,
+        "playwright_include_page": True,
+        "playwright_page_methods": [
+            PageMethod("wait_for_load_state", "domcontentloaded"),
+            PageMethod("wait_for_selector", "a.card--article[data-tms-product-id]"),
+            PageMethod("add_init_script",
+                       "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"),
+        ],
+    },
+)
+\end{lstlisting}
+
 
 \begin{itemize}
     \item \texttt{PLAYWRIGHT\_DEFAULT\_NAVIGATION\_TIMEOUT} werd verhoogd tot 90 seconden;
@@ -508,7 +650,7 @@ Door deze iteratieve optimalisaties werd de Colruyt-scraper getransformeerd van 
     \item langdurig te draaien zonder resource-uitputting.
 \end{itemize}
 
-Deze aanpak minimaliseert blokkades en verhoogt de betrouwbaarheid van het scrapingproces aanzienlijk. Eindarhcitectuur is te zien in figuur~\ref{fig:colruyt-flow}.
+Deze aanpak minimaliseert blokkades en verhoogt de betrouwbaarheid van het scrapingproces aanzienlijk. Eindarchitectuur is te zien in figuur~\ref{fig:colruyt-flow}.
 
 \begin{figure}[H]
     \centering
@@ -550,15 +692,15 @@ Deze aanpak minimaliseert blokkades en verhoogt de betrouwbaarheid van het scrap
         \hline
         Anti-bot complexiteit & Laag & Gemiddeld & Hoog \\
         \hline
-        Stealthmaatregelen & Headers + impersonatie & Browser impersonatie & Multi-layer stealth + fingerprint spoofing \\
+        Stealthmaat\-regelen & Headers + impersonatie & Browser impersonatie & Multi-layer stealth + fingerprint spoofing \\
         \hline
         Paginatie & GraphQL response metadata & URL-parameter (\texttt{p}) & Query-parameter + JS-rendering \\
         \hline
         Performantie & Zeer hoog & Hoog & Lager \\
         \hline
-        Foutgevoeligheid & Laag & Gemiddeld & Hoog (zonder mitigaties) \\
+        Foutgevoelig\-heid & Laag & Gemiddeld & Hoog (zonder mitigaties) \\
         \hline
-        Onderhoudbaarheid & Zeer goed & Goed & Complex \\
+        Onderhoud\-baarheid & Zeer goed & Goed & Complex \\
         \hline
         Gebruik Playwright & Nee & Nee & Ja \\
         \hline
@@ -584,7 +726,7 @@ Colruyt vormt het meest complexe scraping-scenario. De website is sterk afhankel
 Deze aanpak is intrinsiek trager en foutgevoeliger, maar onvermijdelijk om betrouwbare data te verkrijgen. Om dit te mitigeren werden geavanceerde stealthmaatregelen, aangepaste navigatiestrategieën en expliciet resourcebeheer geïmplementeerd.
 
 \paragraph{Overkoepelende conclusie}
-De vergelijking toont aan dat een uniforme scraping-oplossing onvoldoende zou zijn voor dit project. Door per databron de meest geschikte techniek te kiezen — GraphQL waar mogelijk, HTML-parsing waar voldoende, en headless rendering waar noodzakelijk — wordt een optimale balans bereikt tussen performantie, stabiliteit en onderhoudbaarheid.
+De vergelijking toont aan dat een uniforme scraping-oplossing onvoldoende zou zijn voor dit project. Door per databron de meest geschikte techniek te kiezen - GraphQL waar mogelijk, HTML-parsing waar voldoende, en headless rendering waar noodzakelijk - wordt een optimale balans bereikt tussen performantie, stabiliteit en onderhoudbaarheid.
 Deze gelaagde aanpak onderstreept de flexibiliteit en schaalbaarheid van de gekozen scraping-architectuur.
 
 \section{Opslag van ruwe data}
@@ -605,6 +747,28 @@ De normalizer consumeert berichten van het \texttt{scraped\_items}-topic en is v
 \end{itemize}
 
 Via \texttt{update\_or\_create} worden bestaande prijsrecords geüpdatet, wat voorkomt dat duplicaten ontstaan bij herhaalde scraping.
+\begin{lstlisting}[language=Python, caption={Normalisatie en persistente opslag in \texttt{normalizer.py} (vereenvoudigd)}, label={lst:normalizer_upsert}]
+def parse_decimal(value):
+    try:
+        return Decimal(str(value).replace(",", "."))
+    except Exception:
+        return None
+
+shop, _ = Shop.objects.get_or_create(name=store_name)
+product, _ = Product.objects.get_or_create(name=product_name)
+
+ShopProduct.objects.update_or_create(
+    product=product,
+    shop=shop,
+    defaults={
+        "price_per_unit": price_per_unit,
+        "barcode": barcode,
+        "source_url": source_url,
+        "scraped_at": scraped_at,
+    },
+)
+\end{lstlisting}
+
 Door transformatie los te koppelen van scraping wordt het systeem beter onderhoudbaar en uitbreidbaar. 
 
 \section{Gestructureerde opslag}
@@ -613,16 +777,14 @@ Na normalisatie wordt de data opgeslagen in een PostgreSQL-databank via Django O
 
 \section{Optimalisatie van productmatching}
 
-\subsection{Probleemstelling}
-
 In de initiële implementatie van de zoek- en winkelmandfunctionaliteit werd productmatching uitgevoerd via een eenvoudige substring-vergelijking op databankniveau, gebruikmakend van SQL \texttt{LIKE}-operatoren (of Django’s \texttt{icontains}-filter). Hoewel deze aanpak computationeel efficiënt is en een hoge recall oplevert, bleek de precisie onvoldoende voor betrouwbare prijsvergelijking.
 
 Een typisch probleem hierbij is het zogenoemde \emph{substring collision}-effect. Zo resulteerde een zoekopdracht naar ``ijs'' (ice cream) ook in producten zoals ``rijst'', omdat de substring ``ijs'' voorkomt in het woord ``rijst''. Aangezien het systeem initieel de goedkoopste match selecteerde, leidde dit tot incorrecte resultaten waarbij irrelevante producten als beste optie werden voorgesteld. Dit had een negatieve impact op zowel de nauwkeurigheid van de vergelijking als de gebruikerservaring.
 
 
-\subsection{Methodologie: gelaagde similariteitsscore}
+\subsection{Gelaagde similariteitsscore}
 
-Om dit probleem te verhelpen werd een aangepaste matching- en rangschikkingslogica ontwikkeld op applicatieniveau. In plaats van een binaire match/no-match-benadering werd een meerlagig scoresysteem geïntroduceerd dat producten rangschikt op basis van hun linguïstische en semantische overeenkomst met de zoekterm.
+Om dit probleem te verhelpen werd een aangepaste matching- en rangschikkingslogica ontwikkeld op applicatieniveau. In plaats van een binaire match/no-match-benadering werd een meerlaags scoresysteem geïntroduceerd dat producten rangschikt op basis van hun linguïstische en semantische overeenkomst met de zoekterm.
 
 De matchinglogica bestaat uit drie opeenvolgende lagen, waarbij elke laag een hogere tolerantiegraad heeft maar een lagere prioriteit krijgt in de rangschikking.
 
@@ -648,18 +810,19 @@ Om te garanderen dat fuzzy matches altijd lager gerangschikt worden dan exacte o
 De matchinglogica werd geïmplementeerd binnen de Django-applicatielaag, aangezien dergelijke gelaagde ranking moeilijk efficiënt uit te drukken is in standaard SQL-query’s. Listing~\ref{lst:score_match} toont de kern van het scoringsmechanisme.
 
 \begin{lstlisting}[language=Python, caption={Gelaagde productmatching met prioriteitsscores}, label={lst:score_match}]
-    def score_match(name: str, query: str) -> float:
+def score_match(name: str, query: str) -> float:
     name, query = name.lower(), query.lower()
-    
-    # Layer 0: Exact match
+
+    # Laag 0: exacte match
     if name == query:
-    return 0.0
-    
-    # Layer 1: Whole-word match
+        return 0.0
+
+    # Laag 1: volledig woord
     if re.search(rf"\b{re.escape(query)}\b", name):
-    return 1.0 + (len(name) - len(query)) / 100.0
-    
-    # Layer 2: Fuzzy match (Levenshtein)
+        # lichte voorkeur voor kortere namen (meer generiek)
+        return 1.0 + (len(name) - len(query)) / 100.0
+
+    # Laag 2: fuzzy (Levenshtein)
     return float(levenshtein(name, query) + 2)
 \end{lstlisting}
 
@@ -668,13 +831,12 @@ De matchinglogica werd geïmplementeerd binnen de Django-applicatielaag, aangezi
 
 De introductie van het scoresysteem had een directe impact op meerdere onderdelen van de applicatie:
 
-\paragraph{Herordening van zoekresultaten}
+\subsubsection{Herordening van zoekresultaten}
 De zoekpagina haalt nu eerst een beperkte set kandidaatproducten op via \texttt{icontains}. Vervolgens wordt voor elk product een similariteitsscore berekend en worden de resultaten gesorteerd op \texttt{(score, prijs\_per\_eenheid)}. Hierdoor verschijnen de meest relevante producten bovenaan, zelfs indien zij niet de absoluut laagste prijs hebben.
 
-\paragraph{Intelligente winkelmandberekening}
+\subsubsection{Slimme winkelmandberekening}
 Bij het automatisch samenstellen van een goedkoopste winkelmand wordt niet langer blind het goedkoopste product geselecteerd. In plaats daarvan wordt eerst bepaald welke producten tot de beste matchcategorie behoren. Indien enkel lage-kwaliteit fuzzy matches beschikbaar zijn, wordt dit beschouwd als een lage betrouwbaarheidssituatie en wordt automatisch een nieuwe, gerichte scraping-opdracht ingepland.
 
----
 
 \subsection{Conclusie}
 
@@ -686,6 +848,23 @@ Door over te stappen van een eenvoudige substringvergelijking naar een gelaagde 
 Naast gebruikersgestuurde scraping wordt ook proactieve data-verversing voorzien via \texttt{scheduler.py}. Dit script publiceert op vaste tijdstippen (dagelijks om 02:00) scraping-opdrachten voor een set basisproducten.
 
 Hierdoor bevat het systeem steeds recente data, zelfs zonder actieve gebruikers.
+\begin{lstlisting}[language=Python, caption={Nightly refresh jobs publiceren in \texttt{scheduler.py} (vereenvoudigd)}, label={lst:scheduler_nightly}]
+def publish_job(query: str, reason: str):
+    payload = {
+        "query": query,
+        "reason": reason,
+        "requested_at": datetime.now(timezone.utc).isoformat(),
+    }
+    producer.send(TOPIC, key=query.encode("utf-8"), value=payload)
+
+def nightly():
+    for term in SEARCH_TERMS:
+        publish_job(term, reason="nightly")
+    producer.flush()
+
+schedule.every().day.at("02:00").do(nightly)
+\end{lstlisting}
+
 
 
 \section{Docker}
@@ -702,7 +881,28 @@ Alle componenten van het systeem draaien als afzonderlijke Docker-containers:
     \item Scheduler
 \end{itemize}
 
-Via \texttt{docker-compose} worden deze containers samen opgestart en via een gedeeld netwerk met elkaar verbonden. Omgevingsvariabelen (zoals databank- en Kafka-configuratie) worden centraal beheerd via een \texttt{.env}-bestand.
+Via \texttt{docker-compose} worden deze containers samen opgestart en via een gedeeld netwerk met elkaar verbonden.
+\begin{lstlisting}[language=YAML, caption={Uittreksel \texttt{docker-compose.yaml}: services en Kafka listeners}, label={lst:docker_compose}]
+broker:
+  image: confluentinc/cp-kafka:7.6.1
+  ports:
+    - "9092:9092"     # host access
+    - "29092:29092"   # container network
+  environment:
+    KAFKA_LISTENERS: PLAINTEXT_INTERNAL://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092
+    KAFKA_ADVERTISED_LISTENERS: PLAINTEXT_INTERNAL://broker:29092,PLAINTEXT_HOST://localhost:9092
+
+web:
+  build: .
+  depends_on: [db, broker]
+  ports: ["8000:8000"]
+
+scraper-worker:
+  build: .
+  depends_on: [db, broker]
+  command: ["python", "scripts/scraper_worker.py"]
+\end{lstlisting}
+ Omgevingsvariabelen (zoals databank- en Kafka-configuratie) worden centraal beheerd via een \texttt{.env}-bestand.
 
 Deze aanpak garandeert reproduceerbaarheid, vereenvoudigt deployment en maakt horizontale schaalvergroting mogelijk door meerdere workers te starten.
 
@@ -734,7 +934,7 @@ Deze architectuur biedt een solide basis voor verdere uitbreidingen, zoals autom
 %Geprobeerd beautiful soup + requests, daar wordt er makkelijk gedetecteerd dat het geen echte persoon is.
 %Daar 403 en 456 tegengekomen. En ik werd geblocked door cloudfaire van carrefour met gewone requests.
 %
-%Daarna van Co-promoter angeraaden om scrapy te gebruiken en beter scrapy impersenate om headers van de browser na te doen. Aanpak: 1. Graphql van AH aanspreken met json als een antwoord. 2. Carrefour de pagina zelf scrapen. 3. Coloryt scrapen van de pagina met playwrite om js elementen te loaden.
+%Daarna van Co-promoter aangeraden om scrapy te gebruiken en beter scrapy impersenate om headers van de browser na te doen. Aanpak: 1. Graphql van AH aanspreken met json als een antwoord. 2. Carrefour de pagina zelf scrapen. 3. Coloryt scrapen van de pagina met playwrite om js elementen te loaden.
 %
 %
 %https://github.com/JaapWestera/albert-heijn-graphql-api/tree/main?tab=readme-ov-file
